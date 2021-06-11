@@ -11,3 +11,10 @@
 * * Set up SQL database for storing database (later)
 * * Set up the server for serving the service (or website)
 * Write tests
+
+
+___
+
+# Notes:
+
+URL encoding using `requests` librarys: - [link](https://2.python-requests.org/en/master/user/quickstart/#passing-parameters-in-urls)
