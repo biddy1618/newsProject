@@ -8,7 +8,7 @@ params = {'date': '01.01.2020'}
 
 body = requests.get(url, params = params)
 
-soup = bs(body.content, 'html_parser')
+soup = bs(body.content, 'html.parser')
 
 
 link_divs = soup.find_all('div', class_ = 'lenta_news_block')
