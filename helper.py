@@ -16,7 +16,7 @@ class Helper():
             Defaults to None.
 
         Returns:
-            List[str]: [description]
+            List[str]: list of dates for the given date range (days).
         """
         format = "%d.%m.%Y"
         try:

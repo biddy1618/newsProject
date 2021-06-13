@@ -1,8 +1,16 @@
 # Project "News Analysis"
 
 ## Project plan (alpha)
+Part 1 - getting the data:
 * Crawl news data from __inform.kz__
-* * Set up a crawler to fetch the data and store in DB (later)
+* * Set up a crawler to fetch the data and store in DB - later
+* * * For now, simply crawl the data in a single thread
+* * * Write crawler in paraller (4 threads) - later
+* * * Think about efficient I/O operation for storing the crawled data - later
+* Set up PostgreSQL DB for storing the links and articles - done
+* * Create table for links, create table for articles
+
+Part 2 - working over models:
 * Run EDA, some ETL and build models. Candidate models:
 * * Text Generation based on LSTM
 * * Label prediction
