@@ -11,7 +11,7 @@ from helper import Helper
 
 crawler = Crawler()
 
-def linkTest(): 
+def link_test(): 
     url = "https://www.inform.kz/ru/archive"
     params = {'date': '01.01.2020'}
 
@@ -25,78 +25,66 @@ def linkTest():
     for d in link_divs:
         print(d.li.a['href'])
 
-def articleTest():
-    dates = Helper.generateDates("01.01.2019", "01.02.2021")
+def article_test():
+    dates = Helper.generate_dates("01.01.2019", "01.01.2020")
+    output = ''
+    for i, d in enumerate(dates):
         
-    res = set()
-
-    for d in random.sample(dates, 10):
-        r = crawler.getUrl(
+        r = crawler.get_url(
             "https://www.inform.kz/" + "ru/archive",
             {'date': d}
         )
     
-        links = crawler.extractLinks(r)
+        links = crawler.extract_links(r)
     
-        for l in random.sample(links, 2):
-            url = "https://www.inform.kz/" + l
-            body = requests.get(url)
+        for l in links:
+            url = "https://www.inform.kz" + l
+            response = requests.get(url)
+            article_text = ''
 
-            soup = bs(body.content, 'html.parser')
+            soup = bs(response.content, 'html.parser')
 
-            
             title = soup.find('div', class_ = 'article_title')
-            print('URL')
-            print(url)
-            print("TITLE:")
-            print(title.getText().strip())
+            print(f'URL:\n {url}')
+            article_text += 'URL:\n' + url +'\n'
+            print(f'TITLE:\n {title.getText().strip()}')
+            article_text += 'TITLE:\n' + title.getText().strip() +'\n'
             date = soup.find('div', class_ = 'date_public_art')
-            print("DATE:")
-            print(date.getText().strip())
+            article_text += 'DATE:\n' + date.getText().strip() +'\n'
+            print(f'DATE:\n {date.getText().strip()}')
             links = soup.find('div', class_ = 'frame_news_article')
             if links:
                 res = set()
                 for a in links.find_all('a'):
                     res.add(a['href'])
-                print("LINKS:")
+                article_text += 'LINKS:\n'
+                print(f'LINKS:')
                 for l in res:
-                    print(l)
+                    print(f'{l}')
+                    article_text += l + '\n'
                 links.decompose()
             body = soup.find('div', class_ = 'article_news_body')
-            print("BODY:")
-            print(body.getText().strip())
+            article_text += 'BODY:\n' + body.getText().strip() +'\n'
+            print(f'BODY:\n {body.getText().strip()}')
             keyword = soup.find('div', class_ = 'keyword_art')
-            print("TAGS:")
+            article_text += 'TAGS:\n'
+            print(f'TAGS:')
             for t in  [t.strip() for t in keyword.getText().split('#')]:
-                print(t)
+                article_text += t + '\n'
+                print(f'{t}')
             author = soup.find('p', class_ = 'name_p')
             if author:
-                print("AUTHOR:")
-                print(author.getText().strip())
-            print('-'*50)
-    
-    # url = "https://www.inform.kz/ru/serdechnyy-pristup-stal-vinoy-smertel-nogo-dtp-v-akmolinskoy-oblasti_a3690672"
-    # body = requests.get(url)
+                article_text += 'AUTHOR:\n'
+                article_text += author.getText().strip() + '\n'
+                print(f'AUTHOR:\n {author.getText().strip()}')
+            article_text += '-' * 50 + '\n'
+            output += article_text
+        if i % 10 == 0:
+            with open('result.txt', 'a') as f:
+                f.write(output)
+                output = ''
+    with open('result.txt', 'a') as f:
+        f.write(output)
+        output = ''
 
-    # soup = bs(body.content, 'html.parser')
-
-    # title = soup.find('div', class_ = 'article_title')
-    # print(title.getText().strip())
-    # date = soup.find('div', class_ = 'date_public_art')
-    # print(date.getText().strip())
-    # links = soup.find('div', class_ = 'frame_news_article')
-    # res = set()
-    # for a in links.find_all('a'):
-    #     res.add(a['href'])
-    # print(res)
-    # links.decompose()
-    # body = soup.find('div', class_ = 'article_news_body')
-    # print(body.getText().strip())
-    # keyword = soup.find('div', class_ = 'keyword_art')
-    # for t in  [t.strip() for t in keyword.getText().split('#')]:
-    #     print(t)
-
-articleTest()
-
-
-
+article_test()

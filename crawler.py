@@ -4,10 +4,14 @@ from bs4 import BeautifulSoup as bs
 from typing import Dict, List
 
 class Crawler():
+
+    def __init__(self) -> None:
+        self.URL_MAIN = "https://www.inform.kz"
+        self.URL_ARCHIVE = "https://www.inform.kz/ru/archive"
     """
     Generic class defining crawler
     """
-    def getUrl(sefl, url: str, params: Dict[str, str]) -> requests.Response:
+    def get_url(sefl, url: str, params: Dict[str, str]) -> requests.Response:
         """
         Fetch the URL provided and return response object
 
@@ -21,7 +25,7 @@ class Crawler():
         body = requests.get(url, params = params)
         return body
 
-    def extractLinks(self, body: requests.Response) -> List[str]:
+    def extract_links(self, body: requests.Response) -> List[str]:
         """
         Retrieving links given the response object
 
@@ -37,7 +41,7 @@ class Crawler():
 
         return links
     
-    def extractArticle(self, body: requests.Response) -> Dict[str, str]:
+    def extract_article(self, body: requests.Response) -> Dict[str, str]:
         """[summary]
 
         Args:
