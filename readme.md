@@ -8,7 +8,7 @@ Part 1 - getting the data:
 * * * Write crawler in paraller (4 threads) - later
 * * * Think about efficient I/O operation for storing the crawled data - later
 * Set up PostgreSQL DB for storing the links and articles - done
-* * Create table for links, create table for articles
+* * Set up tables and build ORM using sqlalchemy - done (need to test it)
 
 Part 2 - working over models:
 * Run EDA, some ETL and build models. Candidate models:
@@ -16,7 +16,6 @@ Part 2 - working over models:
 * * Label prediction
 * * Will see based on EDA
 * Deploy the model locally
-* * Set up SQL database for storing database (later)
 * * Set up the server for serving the service (or website)
 * Write tests
 * * First tests - done
@@ -51,4 +50,8 @@ ___
 ## 15-06-2021
 * Created ORM using sqlacodegen
 * When parsing sometimes OSError is raised along with ConnectionError and ProtocolError
+* * Should wrap the calls with try-except closure
 * Implement corrrect way of making request using the same [session](https://docs.python-requests.org/en/master/user/advanced/) and maybe set up the [header values](https://www.scrapehero.com/how-to-fake-and-rotate-user-agents-using-python-3/)
+
+## 16-06-2021
+* Did modification to test crawling script

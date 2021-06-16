@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup as bs
 from crawler import Crawler
 from helper import Helper
 
+import re
 
 crawler = Crawler()
 
@@ -87,4 +88,43 @@ def article_test():
         f.write(output)
         output = ''
 
-article_test()
+def article_specific_test(url):
+    response = requests.get(url)
+    
+    soup = bs(response.content, 'html.parser')
+
+    title = soup.find('div', class_ = 'article_title')
+    print(f'URL:\n{url}')
+    print(f'TITLE:\n{title.getText().strip()}')
+    date = soup.find('div', class_ = 'date_public_art')
+    print(f'DATE:\n{date.getText().strip()}')
+    links = soup.find('div', class_ = 'frame_news_article')
+    if links:
+        res = set()
+        for a in links.find_all('a'):
+            res.add(a['href'])
+        print(f'LINKS:')
+        for l in res:
+            print(f'{l}')
+        links.decompose()
+    quotes = soup.find_all('blockquote', class_ = 'instagram-media')
+    if quotes:
+        for q in quotes:
+            q.decompose()    
+    body = soup.find('div', class_ = 'article_news_body')
+    body = body.getText().strip()
+    body = re.sub(' +', ' ', body)
+    body = re.sub('\r', '\n', body)
+    body = re.sub('\n +', '\n', body)
+    body = re.sub(' +\n', '\n', body)
+    body = re.sub('\n+', '\n', body)
+    print(f'BODY:\n{body}')
+    keyword = soup.find('div', class_ = 'keyword_art')
+    print(f'TAGS:')
+    for t in  [t.strip() for t in keyword.getText().split('#') if len(t.strip()) > 0]:
+        print(f'{t}')
+    author = soup.find('p', class_ = 'name_p')
+    if author:
+        print(f'AUTHOR:\n{author.getText().strip()}')
+
+article_specific_test("https://www.inform.kz/ru/kazahstanskiy-messi-pribyl-v-almaty-i-poproschalsya-s-ufoy_a3502779")

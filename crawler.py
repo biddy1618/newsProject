@@ -22,7 +22,13 @@ class Crawler():
         Returns:
             requests.Response: HTML page fetched with response code
         """
-        body = requests.get(url, params = params)
+        body = None
+        try:
+            body = requests.get(url, params = params)
+        except Exception as e:
+            "TODO: set up logging for failed fetch"
+            print(e)
+
         return body
 
     def extract_links(self, body: requests.Response) -> List[str]:
