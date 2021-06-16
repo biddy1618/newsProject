@@ -1,7 +1,11 @@
 import requests
+import logging
+
 from bs4 import BeautifulSoup as bs
 
 from typing import Dict, List
+
+log = logging.getLogger(__name__)
 
 class Crawler():
 
@@ -26,7 +30,7 @@ class Crawler():
         try:
             body = requests.get(url, params = params)
         except Exception as e:
-            "TODO: set up logging for failed fetch"
+            logging.error("")
             print(e)
 
         return body
@@ -57,5 +61,3 @@ class Crawler():
             Dict[str, str]: [description]
         """
         raise NotImplementedError("Function not implemented yet.")
-
-

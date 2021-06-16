@@ -55,3 +55,4 @@ ___
 
 ## 16-06-2021
 * Did modification to test crawling script
+* Need to implement logging in try-except closure
