@@ -5,8 +5,8 @@ import random
 
 from bs4 import BeautifulSoup as bs
 
-from crawler import Crawler
-from helper import Helper
+from app.crawler.crawler import Crawler
+from app.helper import Helper
 
 import re
 
@@ -127,4 +127,6 @@ def article_specific_test(url):
     if author:
         print(f'AUTHOR:\n{author.getText().strip()}')
 
-article_specific_test("https://www.inform.kz/ru/kazahstanskiy-messi-pribyl-v-almaty-i-poproschalsya-s-ufoy_a3502779")
+# article_specific_test("https://www.inform.kz/ru/obzor-naibolee-vazhnyh-sobytiy-v-kazahstane-28-fevralya_a3502744")
+r = crawler.get_url("https://www.inform.kz/ruasdass")
+crawler.extract_pages(r)
