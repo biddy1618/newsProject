@@ -41,6 +41,7 @@ ___
 * How to structure `Flask App` - [link](https://itnext.io/flask-project-structure-the-right-choice-to-start-4553740fad98)
 * Guide to python packaging tool (for file `setup.py`) - [link](https://realpython.com/pipenv-guide/)
 * Python relative path importing usint `setup.py` - [link](https://stackoverflow.com/questions/714063/importing-modules-from-parent-folder)
+* Using SQLAlchemy with Flask, not Flask-SQLAlchemy - [link](https://towardsdatascience.com/use-flask-and-sqlalchemy-not-flask-sqlalchemy-5a64fafe22a4)
 
 
 # Logs
@@ -59,3 +60,7 @@ ___
 ## 16-06-2021
 * Did modification to test crawling script
 * Need to implement logging in try-except closure
+
+## 19-06-2021
+* Modified crawler
+* Formatted code

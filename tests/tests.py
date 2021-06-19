@@ -4,62 +4,39 @@ import random
 
 import requests
 
-from crawler import Crawler
-from helper import Helper
+from app.crawler.crawler import Crawler
+from app.helper import Helper
 from bs4 import BeautifulSoup as bs
 
 class Test(unittest.TestCase):
-    
-    def testLinksRetrieved(self):
-        
-        crawler = Crawler()
-        dates = Helper.generate_dates("01.01.2019", "01.02.2021")
-        
-        res = set()
 
+    def testCrawler(self):
+        dates = Helper.generate_dates('01.01.2019', '02.01.2020')
+        crawler = Crawler()
+        
         for d in random.sample(dates, 20):
             r = crawler.get_url(crawler.URL_ARCHIVE, {'date': d})
             self.assertEqual(r.status_code, 200)
             
-            links = crawler.extract_links(r)
-            self.assertEqual(len(links), 20)
-            res.update(links)
-        self.assertEqual(len(res), 20 * 20)
+            links = crawler.get_links(r)
+            
+            for l in links:
+                page = crawler.get_url(l)
+                self.assertEqual(r.status_code, 200)
+                article = crawler.extract_article(page)
 
-    def testArticlesRetrieved(self):
-        
-        crawler = Crawler()
-        dates = Helper.generate_dates("01.01.2019", "01.02.2021")
-        
-        res = set()
+                self.assertTrue('url' in article)
+                self.assertTrue('title' in article)
+                self.assertTrue('date' in article)
+                self.assertTrue('body' in article)
 
-        for d in random.sample(dates, 10):
-            r = crawler.get_url(
-                crawler.URL_ARCHIVE,
-                {'date': d}
-            )
-            self.assertEqual(r.status_code, 200)
-        
-            links = crawler.extract_links(r)
-            self.assertEqual(len(links), 20)
-        
-            for l in random.sample(links, 2):
-                link_url = crawler.URL_MAIN + l
-                body = requests.get(link_url)
-
-                soup = bs(body.content, 'html.parser')
-
-                title = soup.find('div', class_ = 'article_title')
-                self.assertIsNotNone(title)
-                self.assertIsInstance(title.getText().strip(), str)
-
-                date = soup.find('div', class_ = 'date_public_art')
-                self.assertIsNotNone(date)
-                self.assertIsInstance(date.getText().strip(), str)
+                self.assertIsInstance(article['title'], str)
+                self.assertIsInstance(article['date'], str)
+                self.assertIsInstance(article['body'], str)
                 
-                links = soup.find('div', class_ = 'frame_news_article')
-                if links is not None: links.decompose()
-                
-                body = soup.find('div', class_ = 'article_news_body')
-                self.assertIsNotNone(body)
-                self.assertIsInstance(body.getText().strip(), str)
+                if 'links' in article:
+                    self.assertIsInstance(article['links'], list)
+                if 'keywords' in article:
+                    self.assertIsInstance(article['keywords'], list)
+                if 'author' in article:
+                    self.assertIsInstance(article['author'], str)

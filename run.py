@@ -1,7 +1,7 @@
 # First, process single URL based and retrieve links to articles
 
 import requests
-import random
+import logging
 
 from bs4 import BeautifulSoup as bs
 
@@ -12,121 +12,38 @@ import re
 
 crawler = Crawler()
 
-def link_test(): 
-    url = "https://www.inform.kz/ru/archive"
-    params = {'date': '01.01.2020'}
+logging.basicConfig(
+    format='{levelname:<10} {asctime}: {message}', 
+    level=logging.INFO, 
+    datefmt='%m/%d/%Y %H:%M:%S',
+    style='{')
+logger = logging.getLogger(__name__)
 
-    body = requests.get(url, params = params)
 
-    soup = bs(body.content, 'html.parser')
+def crawler_test(dateFirst = '01.01.2020', dateLast = '02.01.2020'):
+    dates = Helper.generate_dates(dateFirst, dateLast)
 
-
-    link_divs = soup.find_all('div', class_ = 'lenta_news_block')
-
-    for d in link_divs:
-        print(d.li.a['href'])
-
-def article_test():
-    dates = Helper.generate_dates("01.01.2019", "01.01.2020")
-    output = ''
-    for i, d in enumerate(dates):
+    for d in dates:
+        res = set()
         
-        r = crawler.get_url(
-            "https://www.inform.kz/" + "ru/archive",
+        r_link_date = crawler.get_url(
+            crawler.URL_ARCHIVE,
             {'date': d}
         )
     
-        links = crawler.extract_links(r)
-    
+        links = crawler.get_links(r_link_date)
+        
         for l in links:
-            url = "https://www.inform.kz" + l
-            response = requests.get(url)
-            article_text = ''
+            if l in res:
+                logger.warning(Helper._message(f'Duplicate article URL: {l}'))
+                continue
+            r_page = crawler.get_url(l)
+            res.add(l)
+            crawler.extract_article(r_page)
+        
+def cralwer_test_article(url):
+    r_page = crawler.get_url(url)
+    article = crawler.extract_article(r_page)
+    return article
 
-            soup = bs(response.content, 'html.parser')
-
-            title = soup.find('div', class_ = 'article_title')
-            print(f'URL:\n {url}')
-            article_text += 'URL:\n' + url +'\n'
-            print(f'TITLE:\n {title.getText().strip()}')
-            article_text += 'TITLE:\n' + title.getText().strip() +'\n'
-            date = soup.find('div', class_ = 'date_public_art')
-            article_text += 'DATE:\n' + date.getText().strip() +'\n'
-            print(f'DATE:\n {date.getText().strip()}')
-            links = soup.find('div', class_ = 'frame_news_article')
-            if links:
-                res = set()
-                for a in links.find_all('a'):
-                    res.add(a['href'])
-                article_text += 'LINKS:\n'
-                print(f'LINKS:')
-                for l in res:
-                    print(f'{l}')
-                    article_text += l + '\n'
-                links.decompose()
-            body = soup.find('div', class_ = 'article_news_body')
-            article_text += 'BODY:\n' + body.getText().strip() +'\n'
-            print(f'BODY:\n {body.getText().strip()}')
-            keyword = soup.find('div', class_ = 'keyword_art')
-            article_text += 'TAGS:\n'
-            print(f'TAGS:')
-            for t in  [t.strip() for t in keyword.getText().split('#')]:
-                article_text += t + '\n'
-                print(f'{t}')
-            author = soup.find('p', class_ = 'name_p')
-            if author:
-                article_text += 'AUTHOR:\n'
-                article_text += author.getText().strip() + '\n'
-                print(f'AUTHOR:\n {author.getText().strip()}')
-            article_text += '-' * 50 + '\n'
-            output += article_text
-        if i % 10 == 0:
-            with open('result.txt', 'a') as f:
-                f.write(output)
-                output = ''
-    with open('result.txt', 'a') as f:
-        f.write(output)
-        output = ''
-
-def article_specific_test(url):
-    response = requests.get(url)
-    
-    soup = bs(response.content, 'html.parser')
-
-    title = soup.find('div', class_ = 'article_title')
-    print(f'URL:\n{url}')
-    print(f'TITLE:\n{title.getText().strip()}')
-    date = soup.find('div', class_ = 'date_public_art')
-    print(f'DATE:\n{date.getText().strip()}')
-    links = soup.find('div', class_ = 'frame_news_article')
-    if links:
-        res = set()
-        for a in links.find_all('a'):
-            res.add(a['href'])
-        print(f'LINKS:')
-        for l in res:
-            print(f'{l}')
-        links.decompose()
-    quotes = soup.find_all('blockquote', class_ = 'instagram-media')
-    if quotes:
-        for q in quotes:
-            q.decompose()    
-    body = soup.find('div', class_ = 'article_news_body')
-    body = body.getText().strip()
-    body = re.sub(' +', ' ', body)
-    body = re.sub('\r', '\n', body)
-    body = re.sub('\n +', '\n', body)
-    body = re.sub(' +\n', '\n', body)
-    body = re.sub('\n+', '\n', body)
-    print(f'BODY:\n{body}')
-    keyword = soup.find('div', class_ = 'keyword_art')
-    print(f'TAGS:')
-    for t in  [t.strip() for t in keyword.getText().split('#') if len(t.strip()) > 0]:
-        print(f'{t}')
-    author = soup.find('p', class_ = 'name_p')
-    if author:
-        print(f'AUTHOR:\n{author.getText().strip()}')
-
-# article_specific_test("https://www.inform.kz/ru/obzor-naibolee-vazhnyh-sobytiy-v-kazahstane-28-fevralya_a3502744")
-r = crawler.get_url("https://www.inform.kz/ruasdass")
-crawler.extract_pages(r)
+crawler_test()
