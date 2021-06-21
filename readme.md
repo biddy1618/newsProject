@@ -64,3 +64,8 @@ ___
 ## 19-06-2021
 * Modified crawler
 * Formatted code
+
+## 21-06-2021
+* Testing ORM
+* TO-DO: write ORM operations for testing
+* NOTE: I don't if additional class for `Base` is implemented correctly. Some expert opinion would be helpful.
