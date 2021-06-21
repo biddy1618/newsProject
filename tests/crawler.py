@@ -2,13 +2,10 @@ import unittest
 
 import random
 
-import requests
-
 from app.crawler.crawler import Crawler
 from app.helper import Helper
-from bs4 import BeautifulSoup as bs
 
-class Test(unittest.TestCase):
+class TestCrawler(unittest.TestCase):
 
     def testCrawler(self):
         dates = Helper.generate_dates('01.01.2019', '02.01.2020')
@@ -40,3 +37,5 @@ class Test(unittest.TestCase):
                     self.assertIsInstance(article['keywords'], list)
                 if 'author' in article:
                     self.assertIsInstance(article['author'], str)
+    
+    
