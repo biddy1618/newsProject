@@ -3,18 +3,18 @@ create table if not exists Articles (
     url varchar unique not null,
     title varchar unique not null,
     date date not null,
-    article varchar not null,
+    body varchar not null,
     author varchar
 );
 
-create table if not exists ArticleLinks (
+create table if not exists Article_links (
     id serial primary key,
-    idArticle varchar not null references Articles,
-    url_other varchar not null
+    id_article integer not null references Articles,
+    id_article_other integer not null
 );
 
-create table if not exists ArticleTags (
+create table if not exists Article_tags (
     id serial primary key,
-    idArticle varchar not null references Articles,
+    id_article integer not null references Articles,
     tag varchar not null
 );

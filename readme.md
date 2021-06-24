@@ -29,6 +29,8 @@ The project will be run based on flask server. The server will act as a daemon f
 * Crawler for the links
 * Crawler of the articles
 
+## `sqlacodegen` script
+`sqlacodegen postgresql://biddy:12345@localhost/projectnews`
 ___
 
 # Notes:
@@ -40,8 +42,10 @@ ___
 * Python style guide - [link](https://stackoverflow.com/questions/159720/what-is-the-naming-convention-in-python-for-variable-and-function-names)
 * How to structure `Flask App` - [link](https://itnext.io/flask-project-structure-the-right-choice-to-start-4553740fad98)
 * Guide to python packaging tool (for file `setup.py`) - [link](https://realpython.com/pipenv-guide/)
-* Python relative path importing usint `setup.py` - [link](https://stackoverflow.com/questions/714063/importing-modules-from-parent-folder)
+* Python relative path importing using `setup.py` - [link](https://stackoverflow.com/questions/714063/importing-modules-from-parent-folder)
 * Using SQLAlchemy with Flask, not Flask-SQLAlchemy - [link](https://towardsdatascience.com/use-flask-and-sqlalchemy-not-flask-sqlalchemy-5a64fafe22a4)
+* Thread-local session SQLAlchemy - [link](https://docs.sqlalchemy.org/en/13/orm/contextual.html#unitofwork-contextual)
+* SQLAlchemy session how-to - [link](https://docs.sqlalchemy.org/en/13/orm/session_basics.html#session-faq-whentocreate)
 
 
 # Logs
@@ -69,3 +73,10 @@ ___
 * Testing ORM
 * TO-DO: write ORM operations for testing
 * NOTE: I don't if additional class for `Base` is implemented correctly. Some expert opinion would be helpful.
+
+## 24-06-2021
+* Writing ORM operations
+* Got some ideas from Raushan on models
+* * Tags retrieval based on NER extraction model from DeepPavlov
+* * Article embeddings for finding similar (or identical) articles using some google shit
+* * Fake article generation based on BERT-embeddings with attention
