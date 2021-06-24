@@ -1,43 +1,52 @@
 import unittest
 
-from app.db.models import Base, Article, ArticleLink, ArticleTag
+import sqlalchemy
+
+from app.db import models
 
 from datetime import datetime as dt
 
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class testORM(unittest.TestCase):
     
-    article1 = {
+    a1 = {
         'url': 'url1',
         'title': 'title1',
         'date': dt.fromisoformat('2020-01-01'),
         'body': 'body1',
         'author': 'author1'
     }
-    article2 = {
+    a2 = {
         'url': 'url2',
         'title': 'title2',
         'date': dt.fromisoformat('2020-01-01'),
         'body': 'body2'
     }
-    article3 = {
+    a3 = {
         'url': 'url3',
         'title': 'title3',
         'date': dt.fromisoformat('2020-01-01'),
         'body': 'body3'
     }
-    articleDuplicate1 = {
+    a1d = {
         'url': 'url1',
         'title': 'title2',
         'date': dt.fromisoformat('2020-01-01'),
         'body': 'body1'
     }
     
-    def setUp(self):
-        self.engine = create_engine('sqlite:///:memory:')
+    def __init__(self, *args, **kwargs):
+        super(testORM, self).__init__(*args, **kwargs)
+        
+        self.engine = create_engine(os.getenv('DB_URI_TEST'))
+        models.Base.metadata.create_all(bind=self.engine)
         self.session = scoped_session(
             sessionmaker(
                 autocommit=False,
@@ -45,19 +54,19 @@ class testORM(unittest.TestCase):
                 bind=self.engine
                 )
             )
-        Base.query = self.session.query_property()
-        Base.metadata.create_all(bind=self.engine)
-
-    def testArticles(self):
-        a1 = Article(
-            url = self.article1['url'],
-            title = self.article1['title'],
-            date = self.article1['date'],
-            body = self.article1['body'],
-        )
-
+        # models.Base.query = self.session.query_property()
         
+    def test_articles(self):
+        s = self.session()
+        models.insert_article(article=self.a1, session=s)
+        s.commit()
+        r = s.query(models.Article).all()
+        self.assertEqual(len(r), 1)
+        self.assertNotEqual(r[0].id, None)
+        self.assertRaises(models.insert_article(self.a1d, s), sqlalchemy.exc.SQLAlchemyError)
+
     
     def tearDown(self):
         self.session.remove()
+        self.engine.drop()
 

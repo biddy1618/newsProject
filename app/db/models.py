@@ -90,7 +90,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def insertArticle(article: dict, session: Session) -> Article:
+def insert_article(article: dict, session: Session) -> Article:
     try:
         a = Article(
             url = article['url'],
@@ -109,11 +109,11 @@ def insertArticle(article: dict, session: Session) -> Article:
 
     return a
 
-def insertArticleBulk(articles: list, session: Session) -> List[Article]:
+def insert_article_bulk(articles: list, session: Session) -> List[Article]:
     res = []
 
     for a in articles:
-        res.append(insertArticle(a, session))
+        res.append(insert_article(a, session))
     
     return res
 
