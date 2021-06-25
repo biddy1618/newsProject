@@ -80,3 +80,9 @@ ___
 * * Tags retrieval based on NER extraction model from DeepPavlov
 * * Article embeddings for finding similar (or identical) articles using some google shit
 * * Fake article generation based on BERT-embeddings with attention
+
+## 25-06-2021
+* Fixed SQL query regarding the primary key set up - [link](https://stackoverflow.com/questions/64016778/better-to-use-serial-primary-key-or-generated-always-as-identity-for-primary-key)
+* Next [link](https://www.postgresqltutorial.com/postgresql-identity-column/)
+* ~~__TODO__~~: Couldn't find any instruction on how to implement identity (`generate as always`) column - [link](https://github.com/sqlalchemy/alembic/issues/775), thus temporarily using autoincrement -> Solved it by using self designed ORM including Identity feature, need expertise opinion on this
+* __TODO__: New identity column attribute works differently than expected, we can insert similar articles, need to debug.

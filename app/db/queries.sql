@@ -1,5 +1,5 @@
 create table if not exists Articles (
-    id serial primary key,
+    id int primary key generated always as identity,
     url varchar unique not null,
     title varchar unique not null,
     date date not null,
@@ -8,13 +8,13 @@ create table if not exists Articles (
 );
 
 create table if not exists Article_links (
-    id serial primary key,
+    id int primary key generated always as identity,
     id_article integer not null references Articles,
     id_article_other integer not null
 );
 
 create table if not exists Article_tags (
-    id serial primary key,
+    id int primary key generated always as identity,
     id_article integer not null references Articles,
     tag varchar not null
 );

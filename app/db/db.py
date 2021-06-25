@@ -9,11 +9,7 @@ from app.db.models import Base
 
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = os.getenv('DB_URI')
+engine = create_engine(os.getenv('DB_URI_DEV'))
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, 
-)
-
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)

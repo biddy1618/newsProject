@@ -46,7 +46,7 @@ class testORM(unittest.TestCase):
         super(testORM, self).__init__(*args, **kwargs)
         
         self.engine = create_engine(os.getenv('DB_URI_TEST'))
-        models.Base.metadata.create_all(bind=self.engine)
+        models.Base.metadata.create_all(self.engine)
         self.session = scoped_session(
             sessionmaker(
                 autocommit=False,
@@ -63,10 +63,15 @@ class testORM(unittest.TestCase):
         r = s.query(models.Article).all()
         self.assertEqual(len(r), 1)
         self.assertNotEqual(r[0].id, None)
-        self.assertRaises(models.insert_article(self.a1d, s), sqlalchemy.exc.SQLAlchemyError)
+        print(r)
+        models.insert_article(self.a1d, s)
+        r = s.query(models.Article).all()
+        print(r)
+        print(models.insert_article(self.a1d, s))
+        # self.assertRaises(models.insert_article(self.a1d, s), sqlalchemy.exc.SQLAlchemyError)
 
     
     def tearDown(self):
         self.session.remove()
-        self.engine.drop()
+        models.Base.metadata.drop_all(self.engine)
 

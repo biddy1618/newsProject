@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import Column, Date, ForeignKey, Integer, String, text
+from sqlalchemy import Column, Date, ForeignKey, Integer, String, Identity, text
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declared_attr
@@ -13,8 +13,6 @@ from typing import List
 from app.helper import Helper
 import logging
 
-import json
-
 Base = declarative_base()
 
 class BaseH(object):
@@ -22,8 +20,6 @@ class BaseH(object):
     @declared_attr
     def __tablename__(self):
         return self.__class__.__name__.lower()
-
-    id =  Column(Integer, primary_key=True)
 
     def serialize(self):
         return {c.name: getattr(self, c.name) for c in inspect(self.__class__).c}
@@ -45,7 +41,7 @@ class BaseH(object):
 class Article(Base, BaseH):
     __tablename__ = 'articles'
 
-    id = Column(Integer, primary_key=True, server_default=text("nextval('articles_id_seq'::regclass)"))
+    id = Column(Integer, Identity(), primary_key=True)
     url = Column(String, nullable=False, unique=True)
     title = Column(String, nullable=False, unique=True)
     date = Column(Date, nullable=False)
@@ -59,7 +55,7 @@ class Article(Base, BaseH):
 class ArticleLink(Base, BaseH):
     __tablename__ = 'article_links'
 
-    id = Column(Integer, primary_key=True, server_default=text("nextval('article_links_id_seq'::regclass)"))
+    id = Column(Integer, Identity(), primary_key=True)
     id_article = Column(ForeignKey('articles.id'), nullable=False)
     id_article_other = Column(ForeignKey('articles.id'), nullable=False)
 
@@ -73,7 +69,7 @@ class ArticleLink(Base, BaseH):
 class ArticleTag(Base, BaseH):
     __tablename__ = 'article_tags'
 
-    id = Column(Integer, primary_key=True, server_default=text("nextval('article_tags_id_seq'::regclass)"))
+    id = Column(Integer, Identity(), primary_key=True)
     id_article = Column(ForeignKey('articles.id'), nullable=False)
     tag = Column(String, nullable=False)
 
