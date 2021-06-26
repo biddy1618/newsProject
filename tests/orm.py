@@ -1,6 +1,8 @@
 import unittest
 
 import sqlalchemy
+import psycopg2
+from sqlalchemy import exc
 
 from app.db import models
 
@@ -41,7 +43,24 @@ class testORM(unittest.TestCase):
         'date': dt.fromisoformat('2020-01-01'),
         'body': 'body1'
     }
-    
+    aInv = {}
+
+    urls1 = {'url_main': 'url1', 'url_other': 'url2'}
+    urls2 = {'url_main': 'url1', 'url_other': 'url3'} 
+    urls3 = {'url_main': 'url3', 'url_other': 'url2'}
+    urls1d = {'url_main': 'url1', 'url_other': 'url2'}
+    urlsInv1 = {'url_main': 'invalid1', 'url_other': 'url1'}
+    urlsInv2 = {'url_main': 'url1', 'url_other': 'invalid2'}
+    urlsInv3 = {'url_main': 'invalid1', 'url_other': 'invalid2'}
+    urlsInv4 = {}
+
+    tag1 = {'url': 'url1', 'tag': 'tag1'}
+    tag2 = {'url': 'url1', 'tag': 'tag2'}
+    tag3 = {'url': 'url2', 'tag': 'tag3'}
+    tag1d = {'url': 'url1', 'tag': 'tag1'}
+    tagInv1 = {'url': 'invalid1', 'tag': 'tag1'}
+    tagInv2 = {}
+
     def __init__(self, *args, **kwargs):
         super(testORM, self).__init__(*args, **kwargs)
         
@@ -54,23 +73,63 @@ class testORM(unittest.TestCase):
                 bind=self.engine
                 )
             )
-        # models.Base.query = self.session.query_property()
+        models.Base.query = self.session.query_property()
         
     def test_articles(self):
         s = self.session()
-        models.insert_article(article=self.a1, session=s)
+                
+        models.insert_article(self.a1, s)
+        models.insert_article(self.a2, s)
+        models.insert_article(self.a3, s)
         s.commit()
         r = s.query(models.Article).all()
-        self.assertEqual(len(r), 1)
+        self.assertEqual(len(r), 3)
         self.assertNotEqual(r[0].id, None)
-        print(r)
-        models.insert_article(self.a1d, s)
-        r = s.query(models.Article).all()
-        print(r)
-        print(models.insert_article(self.a1d, s))
-        # self.assertRaises(models.insert_article(self.a1d, s), sqlalchemy.exc.SQLAlchemyError)
+        self.assertNotEqual(r[1].id, None)
+        self.assertNotEqual(r[2].id, None)
 
-    
+        models.insert_article(self.a1d, s)
+        self.assertRaises(sqlalchemy.exc.IntegrityError, s.commit)
+        s.rollback()
+
+        self.assertEqual(models.insert_article(self.aInv, s), None)
+
+        models.insert_link(self.urls1, s)
+        models.insert_link(self.urls2, s)
+        models.insert_link(self.urls3, s)
+        s.commit()
+        l = s.query(models.ArticleLink).all()
+        self.assertEqual(len(l), 3)
+        self.assertNotEqual(l[0].id, None)
+        self.assertNotEqual(l[1].id, None)
+        self.assertNotEqual(l[2].id, None)
+
+        models.insert_link(self.urls1d, s)
+        self.assertRaises(sqlalchemy.exc.IntegrityError, s.commit)
+        s.rollback()
+
+        self.assertEqual(models.insert_link(self.urlsInv1, s), None)
+        self.assertEqual(models.insert_link(self.urlsInv2, s), None)
+        self.assertEqual(models.insert_link(self.urlsInv3, s), None)
+        self.assertEqual(models.insert_link(self.urlsInv4, s), None)
+
+        models.insert_tag(self.tag1, s)
+        models.insert_tag(self.tag2, s)
+        models.insert_tag(self.tag3, s)
+        s.commit()
+        t = s.query(models.ArticleTag).all()
+        self.assertEqual(len(t), 3)
+        self.assertNotEqual(t[0].id, None)
+        self.assertNotEqual(t[1].id, None)
+        self.assertNotEqual(t[2].id, None)
+
+        models.insert_tag(self.tag1d, s)
+        self.assertRaises(sqlalchemy.exc.IntegrityError, s.commit)
+        s.rollback()
+
+        self.assertEqual(models.insert_tag(self.tagInv1, s), None)
+        self.assertEqual(models.insert_tag(self.tagInv2, s), None)
+        
     def tearDown(self):
         self.session.remove()
         models.Base.metadata.drop_all(self.engine)

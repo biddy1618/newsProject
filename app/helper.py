@@ -18,7 +18,7 @@ class Helper():
         Returns:
             str: message formatted.
         """
-        if e: return f'{msg}. Exception: "{e}".'
+        if e: return f'{msg}. {type(e).__name__}: "{e}".'
         else: return f'{msg}'    
     
     @staticmethod

@@ -11,7 +11,7 @@ class TestCrawler(unittest.TestCase):
         dates = Helper.generate_dates('01.01.2019', '02.01.2020')
         crawler = Crawler()
         
-        for d in random.sample(dates, 20):
+        for d in random.sample(dates, 5):
             r = crawler.get_url(crawler.URL_ARCHIVE, {'date': d})
             self.assertEqual(r.status_code, 200)
             
