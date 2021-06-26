@@ -1,8 +1,7 @@
 import unittest
-
+import logging
 import sqlalchemy
-import psycopg2
-from sqlalchemy import exc
+import os
 
 from app.db import models
 
@@ -12,9 +11,10 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 class testORM(unittest.TestCase):
     

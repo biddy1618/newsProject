@@ -15,6 +15,8 @@ import logging
 
 Base = declarative_base()
 
+logger = logging.getLogger(__name__)
+
 class BaseH(object):
     
     @declared_attr
@@ -79,14 +81,6 @@ class ArticleTag(Base, BaseH):
 
     def __repr__(self):
         return f'Tag: "{self.tag}" linked to "{self.article.url}"'
-
-logging.basicConfig(
-    format='{levelname:<10} {asctime}: {message}', 
-    level=logging.INFO, 
-    datefmt='%m/%d/%Y %H:%M:%S',
-    style='{')
-logger = logging.getLogger(__name__)
-
 
 def insert_article(article: dict, session: Session) -> Article:
     try:

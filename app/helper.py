@@ -3,6 +3,7 @@ import logging
 
 from typing import List
 
+logger = logging.getLogger(__name__)
 
 class Helper():
     
@@ -22,7 +23,7 @@ class Helper():
         else: return f'{msg}'    
     
     @staticmethod
-    def generate_dates(start_date: str, end_date: str = None, logger: logging.Logger = None) -> List[str]:        
+    def generate_dates(start_date: str, end_date: str = None) -> List[str]:        
         """
         Generates date(s) for fetching url links for specific dates.
 

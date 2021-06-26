@@ -1,9 +1,11 @@
 import unittest
-
 import random
+import logging
 
 from app.crawler.crawler import Crawler
 from app.helper import Helper
+
+logger = logging.getLogger(__name__)
 
 class TestCrawler(unittest.TestCase):
 
