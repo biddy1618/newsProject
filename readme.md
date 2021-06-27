@@ -94,3 +94,7 @@ ___
 
 ## 26-06-2021
 * Finally finished testing, now need to implement function that will flawlessly crawl the data and save to DB.
+
+## 27-06-2021
+* Function that will flawlessly crawl the website and save to DB is implemented (seemingly)
+* Now need to leave the crawler active over night or day to crawl data for several years. Maybe should first test it for one year, we will see.
