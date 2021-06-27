@@ -1,24 +1,13 @@
-# First, process single URL based and retrieve links to articles
-
-import requests
-import logging
-
-from bs4 import BeautifulSoup as bs
-
+import sqlalchemy
 from app.crawler.crawler import Crawler
 from app.helper import Helper
+from app.db import db, models
+import logging
 
-import re
-
-crawler = Crawler()
-
-logging.basicConfig(
-    format='{levelname:<10} {asctime}: {message}', 
-    level=logging.INFO, 
-    datefmt='%m/%d/%Y %H:%M:%S',
-    style='{')
 logger = logging.getLogger(__name__)
 
+crawler = Crawler()
+s = db.Session()
 
 def crawler_test(dateFirst = '01.01.2020', dateLast = '02.01.2020'):
     dates = Helper.generate_dates(dateFirst, dateLast)
@@ -35,7 +24,7 @@ def crawler_test(dateFirst = '01.01.2020', dateLast = '02.01.2020'):
         
         for l in links:
             if l in res:
-                logger.warning(Helper._message(f'Duplicate article URL: {l}'))
+                print(f'Duplicate article URL: {l}')
                 continue
             r_page = crawler.get_url(l)
             res.add(l)
@@ -46,4 +35,8 @@ def cralwer_test_article(url):
     article = crawler.extract_article(r_page)
     return article
 
-crawler_test()
+models.Base.metadata.drop_all(db.engine)
+models.Base.metadata.create_all(db.engine)
+s = db.Session()
+
+db.crawl_and_save_to_db("01.01.2012", end_date="10.01.2012", s=s)

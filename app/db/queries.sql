@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS articles
     date date NOT NULL,
     body character varying COLLATE pg_catalog."default" NOT NULL,
     author character varying COLLATE pg_catalog."default",
-    CONSTRAINT articles_pkey PRIMARY KEY (id),
     CONSTRAINT articles_title_key UNIQUE (title),
     CONSTRAINT articles_url_key UNIQUE (url)
 );

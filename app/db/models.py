@@ -1,7 +1,8 @@
 # coding: utf-8
+from datetime import datetime
 from sqlalchemy import Column, Date, ForeignKey, Integer, String, Identity, UniqueConstraint, text
 from sqlalchemy.orm import relationship, Session
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.declarative import declared_attr
 
 from sqlalchemy.inspection import inspect
@@ -12,6 +13,7 @@ from decimal import Decimal as D
 from typing import List
 from app.helper import Helper
 import logging
+import dateparser
 
 Base = declarative_base()
 
@@ -45,7 +47,7 @@ class Article(Base, BaseH):
     
     id = Column(Integer, Identity(), primary_key=True)
     url = Column(String, nullable=False, unique=True)
-    title = Column(String, nullable=False, unique=True)
+    title = Column(String, nullable=False)
     date = Column(Date, nullable=False)
     body = Column(String, nullable=False)
     author = Column(String)
@@ -83,27 +85,46 @@ class ArticleTag(Base, BaseH):
         return f'Tag: "{self.tag}" linked to "{self.article.url}"'
 
 def insert_article(article: dict, session: Session) -> Article:
+    """
+    Insert the article object into session stage.
+
+    Args:
+        article (dict): Dictionary with following elements: "url", "title", "date", "body", "author" (optional).
+        session (Session): Session object.
+
+    Returns:
+        Article: Return SQLAlchemy ORM Article models that was staged in session.
+    """
     try:
+        date = dateparser.parse(article['date'])
         a = Article(
             url = article['url'],
             title = article['title'],
-            date = article['date'],
+            date = date,
             body = article['body'],
         )
         if 'author' in article: a.author = article['author']
         session.add(a)
     except KeyError as e:
         logger.error(Helper._message(f'Failed to get attributes while inserting article: {article}', e))
-        # raise SystemExit(e)
         return None
-    except SQLAlchemyError as e:
-        logger.error(Helper._message(f'SQLAlchemy error at insertion of the following article: {article}', e))
-        # raise SystemExit(e)
+    except DBAPIError as e:
+        logger.error(Helper._message(f'Error at insertion of the following article: {article}', e))
         return None
 
     return a
 
 def insert_article_bulk(articles: list, session: Session) -> List[Article]:
+    """
+    Staging article objects into session object. Same as "insert_article", but for the list of article objects.
+
+    Args:
+        articles (list): List of article objects.
+        session (Session): Session object.
+
+    Returns:
+        List[Article]: List of SQLAlchemy ORM Article models that were staged in session. 
+    """
     res = []
 
     for a in articles:
@@ -112,16 +133,35 @@ def insert_article_bulk(articles: list, session: Session) -> List[Article]:
     return res
 
 def get_article_by_url(url: str, session: Session) -> Article:
+    """
+    Get the SQLAlchemt ORM Article model given the URL.
+
+    Args:
+        url (str): URL of the desired article
+        session (Session): Session object.
+
+    Returns:
+        Article: Return Article model given the URL. None in case it doesn't exist.
+    """
     a = session.query(Article).filter_by(url = url).first()
     return a
 
 def insert_link(urls: dict, session: Session) -> ArticleLink:
+    """
+    Insert the link object into session stage.
+
+    Args:
+        urls (dict): Link dicitonary with following elements: "url_main", "url_other".
+        session (Session): Session object.
+
+    Returns:
+        ArticleLink: Return staged ArticleLink model. None in case of error.
+    """
     try:
         article1 = get_article_by_url(urls['url_main'], session)
         article2 = get_article_by_url(urls['url_other'], session)
     except KeyError as e:
         logger.error(Helper._message(f'Failed to get URL attributes while inserting link: {urls}', e))
-        # raise SystemExit(e)
         return None
     try:
         l = ArticleLink(
@@ -131,22 +171,29 @@ def insert_link(urls: dict, session: Session) -> ArticleLink:
         session.add(l)
     except AttributeError as e:
         logger.error(Helper._message(f'Failed to find the articles IDs with URLs while inserting link: {urls}', e))
-        # raise SystemExit(e)
         return None
-    except SQLAlchemyError as e:
-        logger.error(Helper._message(f'SQLAlchemy error at insertion of the following link: {urls}', e))
-        # raise SystemExit(e)
+    except DBAPIError as e:
+        logger.error(Helper._message(f'Error at insertion of the following link: {urls}', e))
         return None
 
     return l
 
 def insert_tag(url_tag: dict, session: Session) -> ArticleTag:
+    """
+    Insert the tag object into session stage.
+
+    Args:
+        url_tag (dict): Tag object with following elements: "url", "tag".
+        session (Session): Session object.
+
+    Returns:
+        ArticleTag: return ArticleTag model staged into session. Return None in case of error.
+    """
     try:
         article = get_article_by_url(url_tag['url'], session)
         tag = url_tag['tag']
     except KeyError as e:
         logger.error(Helper._message(f'Failed to get tag attributes while inserting tag: {url_tag}', e))
-        # raise SystemExit(e)
         return None
     try:
         t = ArticleTag(
@@ -156,11 +203,9 @@ def insert_tag(url_tag: dict, session: Session) -> ArticleTag:
         session.add(t)
     except AttributeError as e:
         logger.error(Helper._message(f'Failed to find the article ID with URL while inserting tag: {url_tag["url"]}', e))
-        # raise SystemExit(e)
         return None
-    except SQLAlchemyError as e:
-        logger.error(Helper._message(f'SQLAlchemy error at insertion of the following link: {url_tag}', e))
-        # raise SystemExit(e)
+    except DBAPIError as e:
+        logger.error(Helper._message(f'Error at insertion of the following link: {url_tag}', e))
         return None
 
     return t

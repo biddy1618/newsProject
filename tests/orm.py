@@ -16,8 +16,7 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-class testORM(unittest.TestCase):
-    
+class testORM(unittest.TestCase):    
     a1 = {
         'url': 'url1',
         'title': 'title1',
@@ -75,7 +74,10 @@ class testORM(unittest.TestCase):
             )
         models.Base.query = self.session.query_property()
         
-    def test_articles(self):
+    def test_ORM(self):
+        """
+        Testing ORM operations with models.
+        """
         s = self.session()
                 
         models.insert_article(self.a1, s)
