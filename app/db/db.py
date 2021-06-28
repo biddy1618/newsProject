@@ -38,7 +38,7 @@ def crawl_and_save_to_db(start_date: str, s: sqlalchemy.orm.Session, end_date: s
         logger.info(Helper._message(f'Saving {len(data["articles"])} articles.'))
         a_len = len(data['articles'])
         for a in data['articles']:
-            models.insert_article(a, s)
+            if models.insert_article(a, s) is None: a_len -= 1
             try:
                 s.commit()
             except sqlalchemy.exc.DBAPIError as e:
@@ -51,7 +51,7 @@ def crawl_and_save_to_db(start_date: str, s: sqlalchemy.orm.Session, end_date: s
         logger.info(Helper._message(f'Saving {len(data["links"])} links.'))
         l_len = len(data["links"])
         for l in data['links']:
-            models.insert_link(l, s)
+            if models.insert_link(l, s) is None: l_len -= 1
             try:
                 s.commit()
             except sqlalchemy.exc.DBAPIError as e:
@@ -63,7 +63,7 @@ def crawl_and_save_to_db(start_date: str, s: sqlalchemy.orm.Session, end_date: s
         logger.info(Helper._message(f'Saving {len(data["tags"])} tags.'))
         t_len = len(data["tags"])
         for t in data['tags']:
-            models.insert_tag(t, s)
+            if models.insert_tag(t, s) is None: t_len -= 1
             try:
                 s.commit()
             except sqlalchemy.exc.DBAPIError as e:

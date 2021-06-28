@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 crawler = Crawler()
 s = db.Session()
 
-def crawler_test(dateFirst = '01.01.2020', dateLast = '02.01.2020'):
+def crawler_test(dateFirst = '01.01.2012', dateLast = '01.01.2013'):
     dates = Helper.generate_dates(dateFirst, dateLast)
 
     for d in dates:
@@ -35,8 +35,9 @@ def cralwer_test_article(url):
     article = crawler.extract_article(r_page)
     return article
 
-models.Base.metadata.drop_all(db.engine)
+# models.Base.metadata.drop_all(db.engine)
 models.Base.metadata.create_all(db.engine)
 s = db.Session()
 
-db.crawl_and_save_to_db("01.01.2012", end_date="10.01.2012", s=s)
+# db.crawl_and_save_to_db("01.01.2012", end_date="01.01.2013", s=s)
+db.crawl_and_save_to_db("17.02.2012", end_date="01.01.2013", s=s)

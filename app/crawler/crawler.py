@@ -44,15 +44,7 @@ class Crawler():
             try:
                 r = self.session.get(url, params = params)
                 r.raise_for_status()
-            except requests.exceptions.MissingSchema as e:
-                logger.error(Helper._message(f'URL is ill-formatted: {url}', e))
-                # raise SystemExit(e)
-                return None
             except requests.exceptions.RequestException as e:
-                logger.error(Helper._message(f'Failed to get the URL {r.url}', e))
-                # raise SystemExit(e)
-                return None
-            except ConnectionError as e:
                 if i == 9:
                     logger.error(Helper._message(f'Failed to get the URL {r.url}', e))
                     return None
@@ -167,7 +159,7 @@ class Crawler():
             return None
         return date
     
-    def _get_links(self, soup: bs, url: str) -> List[str]:
+    def _get_reference_links(self, soup: bs, url: str) -> List[str]:
         """
         Get the links of related articles from BS object.
 
@@ -183,7 +175,7 @@ class Crawler():
             res = set()
             if links:
                 for a in links.find_all('a'):
-                    res.add(a['href'])
+                    res.add(urlparse.urlparse(self.URL_MAIN + a['href']).geturl())
                 links.decompose()
         except AttributeError as e:
             logger.error(Helper._message(f'Failed to fetch links at URL {url}', e))
@@ -292,9 +284,12 @@ class Crawler():
         
         title = self._get_title(soup, response.url)
         date = self._get_date(soup, response.url)
-        links = self._get_links(soup, response.url)
+        links = self._get_reference_links(soup, response.url)
         self._decompose_quotes(soup, response.url)
         body = self._get_body(soup, response.url)
+        if not all([title, date, body]):
+            logger.error(Helper._message(f'Failed to fetch the article at URL {response.url}'))
+            return None
         tags = self._get_tags(soup, response.url)
         author = self._get_author(soup, response.url)
 
@@ -327,9 +322,10 @@ class Crawler():
         
         url_links = self.get_links(r)
         logger.info(Helper._message(f'Retrieving {len(url_links)} articles for the date: {date}'))
-        for l in url_links:
+        for i, l in enumerate(url_links):
             page = self.get_url(l)
             article = self.extract_article(page)
+            if article is None: continue
             articles.append(article)
             if 'links' in article:
                 for l in article['links']:
