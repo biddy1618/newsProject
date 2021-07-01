@@ -3,14 +3,12 @@ import logging
 import re
 import time
 
-from sqlalchemy.orm import Session
 import urllib.parse as urlparse
 
 from bs4 import BeautifulSoup as bs
 from typing import Dict, List, Optional
 
 from app.helper import Helper
-from app.db import models
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +19,7 @@ class Crawler():
     def __init__(self):
         self.URL_MAIN = 'https://www.inform.kz'
         self.URL_ARCHIVE = 'https://www.inform.kz/ru/archive'
+        self.TIMEOUT = 5
         self.session = requests.Session()
 
     def close(self):
@@ -40,18 +39,24 @@ class Crawler():
         Returns:
             requests.Response: HTML page fetched with response code or None in case of exception.
         """
+        if params:
+            url_parsed = urlparse.urlparse(url)
+            url_str = url_parsed._replace(
+                query=urlparse.urlencode(dict(urlparse.parse_qsl(url_parsed.query), **params))).geturl()
+        else:
+            url_str = url
         for i in range(10):
             try:
-                r = self.session.get(url, params = params)
+                r = self.session.get(url, params = params, timeout=self.TIMEOUT)
                 r.raise_for_status()
             except requests.exceptions.RequestException as e:
                 if i == 9:
-                    logger.error(Helper._message(f'Failed to get the URL {r.url}', e))
+                    logger.error(Helper._message(f'Failed to get the URL {url_str}', e))
                     return None
-                logger.warning(Helper._message(f'Failed to get the URL {r.url}, retrying in 0.1 seconds.', e))
+                logger.warning(Helper._message(f'Failed to get the URL {url_str}, retrying in 0.1 seconds.', e))
                 time.sleep(0.1)
             else:
-                logger.info(Helper._message(f'Success retrieving URL {r.url}'))
+                logger.info(Helper._message(f'Success retrieving URL {url_str}'))
                 break
         return r
 

@@ -3,7 +3,7 @@
 ## Project plan (alpha)
 Part 1 - getting the data:
 * Crawl news data from __inform.kz__
-* * Set up a crawler to fetch the data and store in DB - later
+* * Set up a crawler to fetch the data and store in DB - done
 * * * For now, simply crawl the data in a single thread
 * * * Write crawler in paraller (4 threads) - later
 * * * Think about efficient I/O operation for storing the crawled data - later
@@ -22,6 +22,36 @@ Part 2 - working over models:
 * Write logs for crawler - done
 * * Start working on logging - done
 
+More on Part 2:
+
+
+* Try different NLP approaches:
+* * Why traditional approach - perform good enough in many tasks, less costly, combined with DL can give good results
+* * Rule-based methods (traditional NLP)
+* * Probabilistic modeling and machine learning (traditional NLP)
+* * Deep Learning (modern approach)
+* Text classification task
+* * Prediction of tag
+* * Prediction of sentiment
+* Word sequences
+* * POS tagging - incorporate into transformation using embeddings
+* * Named entities - need to think
+* * Semantic slot filling - we can use this for question transformation - [link](https://medium.com/koderunners/semantic-slot-filling-part-1-7982d786928e)
+* Embeddings and topic models
+* * Word embeddings
+* * Sentence embeddings
+* * Topic modeling
+* Seq2Seq tasks
+* * Fake data generation - maybe I should try using semantic retrieval for loss function
+* * Machine translation
+
+* Text normalization methods
+* * Tokenization and lemmatization
+* * Text into units by - BOW, TFIDF
+* * Text into units by - word2vec, CNN for n-grams
+
+
+
 The project will be run based on flask server. The server will act as a daemon for crawler fetching the web-data while computer is on.
 
 
@@ -31,6 +61,9 @@ The project will be run based on flask server. The server will act as a daemon f
 
 ## `sqlacodegen` script
 `sqlacodegen postgresql://biddy:12345@localhost/projectnews`
+
+## Launching jupyter lab with hidden files on
+`jupyter lab --ContentsManager.allow_hidden=True`
 ___
 
 # Notes:
@@ -90,7 +123,7 @@ ___
 * Fixed SQL query regarding the primary key set up - [link](https://stackoverflow.com/questions/64016778/better-to-use-serial-primary-key-or-generated-always-as-identity-for-primary-key)
 * Next [link](https://www.postgresqltutorial.com/postgresql-identity-column/)
 * ~~__TODO__~~: Couldn't find any instruction on how to implement identity (`generate as always`) column - [link](https://github.com/sqlalchemy/alembic/issues/775), thus temporarily using autoincrement -> Solved it by using self designed ORM including Identity feature, need expertise opinion on this
-* __TODO__: New identity column attribute works differently than expected, we can insert similar articles, need to debug.
+* ~~__TODO__~~: New identity column attribute works differently than expected, we can insert similar articles, need to debug.
 
 ## 26-06-2021
 * Finally finished testing, now need to implement function that will flawlessly crawl the data and save to DB.
@@ -98,3 +131,7 @@ ___
 ## 27-06-2021
 * Function that will flawlessly crawl the website and save to DB is implemented (seemingly)
 * Now need to leave the crawler active over night or day to crawl data for several years. Maybe should first test it for one year, we will see.
+
+## 01-07-2021
+* Still crawling, at the same time thinking on what kind of models I can deploy
+* Also fixed the some bug in `get_url` function
