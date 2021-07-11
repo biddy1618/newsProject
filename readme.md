@@ -51,6 +51,9 @@ More on Part 2:
 * * Text into units by - word2vec, CNN for n-grams
 
 
+* I was thinking a lot about where to start but couldn't come to specific decision. So I think it is better start with deduplication task (or retrieval of similar articles) based on __TF-IDF__. So, let's go ahead and start working on this shit.
+
+
 
 The project will be run based on flask server. The server will act as a daemon for crawler fetching the web-data while computer is on.
 

@@ -48,17 +48,17 @@ def crawl_and_save_to_db(start_date: str, s: sqlalchemy.orm.Session, end_date: s
         logger.info(Helper._message(f'Successfully saved {a_len} articles.'))
         
                 
-        logger.info(Helper._message(f'Saving {len(data["links"])} links.'))
-        l_len = len(data["links"])
-        for l in data['links']:
-            if models.insert_link(l, s) is None: l_len -= 1
-            try:
-                s.commit()
-            except sqlalchemy.exc.DBAPIError as e:
-                logger.error(Helper._message(f'Error at insertion of the following link: {l}', e))
-                s.rollback()
-                l_len -= 1
-        logger.info(Helper._message(f'Successfully saved {l_len} links.'))
+        # logger.info(Helper._message(f'Saving {len(data["links"])} links.'))
+        # l_len = len(data["links"])
+        # for l in data['links']:
+        #     if models.insert_link(l, s) is None: l_len -= 1
+        #     try:
+        #         s.commit()
+        #     except sqlalchemy.exc.DBAPIError as e:
+        #         logger.error(Helper._message(f'Error at insertion of the following link: {l}', e))
+        #         s.rollback()
+        #         l_len -= 1
+        # logger.info(Helper._message(f'Successfully saved {l_len} links.'))
         
         logger.info(Helper._message(f'Saving {len(data["tags"])} tags.'))
         t_len = len(data["tags"])
