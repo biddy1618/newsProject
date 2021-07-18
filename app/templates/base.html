@@ -1,62 +1,77 @@
 <!DOCTYPE html>
+<html>
+
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<!-- <link rel="stylesheet" href="{{ url_for('static', filename='debug.css') }}"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Pet Project</title>
 </head>
+
 <body>
-<header>
-<nav class="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumbs">
-  	<ul>
-		{% if url_for(request.endpoint) == '/index' %}
-	  	<li class="is-active"><a href="#" aria-current="page">About</a></li>
-		{% else %}
-	  	<li><a href="#">About</a></li>
-		{% endif %}
-		<li><a href="#">About</a></li>
-  	</ul>
-</nav>
-<nav class="navbar" role="navigation" aria-label="main navigation">
-	<div class="navbar-brand">
-		<a class="navbar-item" href="https://github.com/biddy1618">
-			<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-		</a>
-	</div>
-
-	<div id="navbarBasicExample" class="navbar-menu is-active">
-		<div class="navbar-start">
-			<a class="navbar-item">
-				Home
-			</a>
-			<a class="navbar-item">
-				Documentation
-			</a>
-			<div class="navbar-item has-dropdown is-hoverable">
-				<a class="navbar-link">
-				More
+	<!-- START NAV -->
+	<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+		<div class="container">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="../">
+					<img src="../images/bulma.png" alt="Logo">
 				</a>
-
-				<div class="navbar-dropdown">
-				<a class="navbar-item">
-					About
-				</a>
-				<a class="navbar-item">
-					Jobs
-				</a>
-				<a class="navbar-item">
-					Contact
-				</a>
-				<hr class="navbar-divider">
-				<a class="navbar-item">
-					Report an issue
-				</a>
+				<span class="navbar-burger burger" data-target="navbarMenu">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+			</div>
+			<div id="navbarMenu" class="navbar-menu">
+				<div class="navbar-end">
+					<a class="navbar-item is-active">
+							Home
+						</a>
+					<a class="navbar-item">
+							Examples
+						</a>
+					<a class="navbar-item">
+							Features
+						</a>
+					<a class="navbar-item">
+							Team
+						</a>
+					<a class="navbar-item">
+							Archives
+						</a>
+					<a class="navbar-item">
+							Help
+						</a>
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link">
+								Account
+							</a>
+						<div class="navbar-dropdown">
+							<a class="navbar-item">
+									Dashboard
+								</a>
+							<a class="navbar-item">
+									Profile
+								</a>
+							<a class="navbar-item">
+									Settings
+								</a>
+							<hr class="navbar-divider">
+							<div class="navbar-item">
+								Logout
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+	</nav>
+	<!-- END NAV -->
+	<div class="container">
+		{% block content %}{% endblock content %}
 	</div>
-</nav>
-</header>
-<main>
-	{% block content %}{% endblock content %}
-</main>
+	<script async type="text/javascript" src="{{ url_for('static', filename="bulma.js")}}"></script>
 </body>

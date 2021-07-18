@@ -122,3 +122,6 @@ ___
 * Been working on separating crawler and flask app. Also passed `Flask` tutorial. Been brainstorming regarding the front-end. Understood that I have no clue how front-end works, but decided that for my project it wouldn't be wise to study separate framework just for the sake of building front-end, thus decided I will use flask's own rendering features using Jinja's templating library, and also `js`-free `css` framework for beautifying the front-end.
 * Stopped on __bulma css framework__ that just works.
 * Plan for today is desing and implement following pages - _about_, _articles_, and _search_. I should also set up the logic behind the retieval (search), code the views.
+
+## 18-07-2021
+* Going through some _Bulma_ templates for better understanding the `css` hierarchy and structuring the elements.

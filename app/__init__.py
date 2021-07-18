@@ -1,3 +1,4 @@
+from app.views.articles import index
 import os
 from flask import Flask, render_template
 
@@ -21,11 +22,14 @@ def create_app(test_config=None):
     
     init_db(app)
     
-    # a simple page that says hello
+    # test
     @app.route('/hello')
     def hello():
         return render_template('base.html')
     
+    from .views import base
+    app.register_blueprint(base.bp)
+
     from .views import articles
     app.register_blueprint(articles.bp)
 
