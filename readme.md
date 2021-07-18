@@ -1,15 +1,6 @@
 # Project "News Analysis"
 
 ## Project plan (alpha)
-Part 1 - getting the data:
-* Crawl news data from __inform.kz__
-* * Set up a crawler to fetch the data and store in DB - done
-* * * For now, simply crawl the data in a single thread
-* * * Write crawler in paraller (4 threads) - later
-* * * Think about efficient I/O operation for storing the crawled data - later
-* Set up PostgreSQL DB for storing the links and articles - done
-* * Set up tables and build ORM using sqlalchemy - done
-
 Part 2 - working over models:
 * Run EDA, some ETL and build models. Candidate models:
 * * Text Generation based on LSTM
@@ -54,24 +45,12 @@ More on Part 2:
 * I was thinking a lot about where to start but couldn't come to specific decision. So I think it is better start with deduplication task (or retrieval of similar articles) based on __TF-IDF__. So, let's go ahead and start working on this shit.
 
 
-
-The project will be run based on flask server. The server will act as a daemon for crawler fetching the web-data while computer is on.
-
-
-## Crawler structure
-* Crawler for the links
-* Crawler of the articles
-
-## `sqlacodegen` script
-`sqlacodegen postgresql://biddy:12345@localhost/projectnews`
-
 ## Launching jupyter lab with hidden files on
 `jupyter lab --ContentsManager.allow_hidden=True`
 ___
 
 # Notes:
 
-* URL encoding using `requests` library: - [link](https://2.python-requests.org/en/master/user/quickstart/#passing-parameters-in-urls)
 * Python OOP best practices 2020 - [link](https://towardsdatascience.com/5-best-practices-for-professional-object-oriented-programming-in-python-20613e08baee)
 * The try and except blocks are used to handle exceptions. The assert is used to ensure the conditions are compatible with the requirements of a function. - [link](https://towardsdatascience.com/practical-python-try-except-and-assert-7117355ccaab)
 * Python’s assert statement is a debugging aid, not a mechanism for handling run-time errors. The goal of using assertions is to let developers find the likely root cause of a bug more quickly. An assertion error should never be raised unless there’s a bug in your program. - [link](https://medium.com/@jadhavmanoj/python-what-is-raise-and-assert-statement-c3908697bc62)
@@ -138,3 +117,8 @@ ___
 ## 01-07-2021
 * Still crawling, at the same time thinking on what kind of models I can deploy
 * Also fixed the some bug in `get_url` function
+
+## 18-07-2021
+* Been working on separating crawler and flask app. Also passed `Flask` tutorial. Been brainstorming regarding the front-end. Understood that I have no clue how front-end works, but decided that for my project it wouldn't be wise to study separate framework just for the sake of building front-end, thus decided I will use flask's own rendering features using Jinja's templating library, and also `js`-free `css` framework for beautifying the front-end.
+* Stopped on __bulma css framework__ that just works.
+* Plan for today is desing and implement following pages - _about_, _articles_, and _search_. I should also set up the logic behind the retieval (search), code the views.
