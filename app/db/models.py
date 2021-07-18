@@ -1,5 +1,4 @@
 # coding: utf-8
-from datetime import datetime
 from sqlalchemy import Column, Date, ForeignKey, Integer, String, Identity, UniqueConstraint, text
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.exc import DBAPIError

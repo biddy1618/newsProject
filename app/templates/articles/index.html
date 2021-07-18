@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for a in articles %}
+<div class="columns">
+  <div class="column is-three-quarters">
+    {{ a['body'] }}
+  </div>
+  <div class="column">
+    {{ a['author'] }}
+  </div>
+</div>
+{% endfor %}
+{% endblock content %}

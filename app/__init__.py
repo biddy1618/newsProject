@@ -1,12 +1,32 @@
-import logging
+import os
+from flask import Flask, render_template
 
-logging.basicConfig(
-    format='{levelname} {name} {asctime}: {message}', 
-    level=logging.INFO, 
-    datefmt='%m/%d/%Y %H:%M:%S',
-    style='{',
-    handlers=[
-        logging.FileHandler("debug.log"),
-        logging.StreamHandler()
-        ]
-    )
+from .db import init_db
+
+def create_app(test_config=None):
+    app = Flask(__name__, instance_relative_config=True)
+    
+    # ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    if app.config['ENV'] == 'development':
+        app.config.from_object('config.development')
+    elif app.config['ENV'] == 'testing':
+        app.config.from_object('config.testing')
+    else:
+        app.config.from_pyfile('production.py')
+    
+    init_db(app)
+    
+    # a simple page that says hello
+    @app.route('/hello')
+    def hello():
+        return render_template('base.html')
+    
+    from .views import articles
+    app.register_blueprint(articles.bp)
+
+    return app
