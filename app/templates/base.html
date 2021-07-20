@@ -13,11 +13,12 @@
 
 <body>
 	<!-- START NAV -->
-	<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+	<nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
 		<div class="container">
 			<div class="navbar-brand">
-				<a class="navbar-item" href="../">
-					<img src="../images/bulma.png" alt="Logo">
+				<a class="navbar-item {{ 'is-active' if request.path==url_for('base.about') }}"
+					href="{{ url_for('base.about') }}">
+					<span class="icon"><i class="fas fa-home"></i></span><span class="name">About</span>
 				</a>
 				<span class="navbar-burger burger" data-target="navbarMenu">
 					<span></span>
@@ -27,24 +28,11 @@
 			</div>
 			<div id="navbarMenu" class="navbar-menu">
 				<div class="navbar-end">
-					<a class="navbar-item is-active">
-							Home
-						</a>
-					<a class="navbar-item">
-							Examples
-						</a>
-					<a class="navbar-item">
-							Features
-						</a>
-					<a class="navbar-item">
-							Team
-						</a>
-					<a class="navbar-item">
-							Archives
-						</a>
-					<a class="navbar-item">
-							Help
-						</a>
+					<a class="navbar-item {{ 'is-active' if request.path==url_for('articles.index') }}"
+						href="{{ url_for('articles.index') }}">
+						Articles
+					</a>
+					<!--
 					<div class="navbar-item has-dropdown is-hoverable">
 						<a class="navbar-link">
 								Account
@@ -65,13 +53,49 @@
 							</div>
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div>
 	</nav>
-	<!-- END NAV -->
-	<div class="container">
-		{% block content %}{% endblock content %}
+
+	{% block content %}{% endblock content %}
+
+	<!-- FOOTER -->
+	<div class="section">
+		<div class="container">
+			<footer class="footer">
+				<div class="content has-text-centered">
+					<p>
+						<strong>Built with Flask and Bulma with <span class="icon">
+								<i class="fas fa-heart"></i>
+							</span></strong> by <a href="https://mubaidr.js.org">Dauren Baitursyn</a>.
+						The
+						source code is licensed
+						<a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+					</p>
+				</div>
+			</footer>
+		</div>
 	</div>
-	<script async type="text/javascript" src="{{ url_for('static', filename="bulma.js")}}"></script>
+
+	<!-- MODALS -->
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<div class="modal is-active">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="box">
+				<ul>
+					{% for message in messages %}
+					<li>{{ message }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<button class="modal-close is-large" aria-label="close"></button>
+	</div>
+	{% endif %}
+	{% endwith %}
+	<script async type="text/javascript" src="{{ url_for('static', filename='bulma.js')}}"></script>
 </body>

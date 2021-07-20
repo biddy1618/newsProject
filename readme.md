@@ -115,7 +115,7 @@ ___
 * Now need to leave the crawler active over night or day to crawl data for several years. Maybe should first test it for one year, we will see.
 
 ## 01-07-2021
-* Still crawling, at the same time thinking on what kind of models I can deploy
+* Still crawling, at the same time thinking on what kind of models I can deploy.
 * Also fixed the some bug in `get_url` function
 
 ## 18-07-2021

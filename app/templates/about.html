@@ -1,99 +1,277 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="columns is-mobile">
-    <div class="column is-10 is-offset-1">
-        <div class="content">
-            <h1>Hello World</h1>
-            <p>Lorem ipsum<sup><a>[1]</a></sup> dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub<sub>script</sub> works as well!</p>
-            <h2>Second level</h2>
-            <p>Curabitur accumsan turpis pharetra <strong>augue tincidunt</strong> blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
-            <ul>
-                <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
-                <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
-                <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
-                <li>Ut non enim metus.</li>
-            </ul>
-            <h3>Third level</h3>
-            <p>Quisque ante lacus, malesuada ac auctor vitae, congue <a href="#">non ante</a>. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
-            <ol>
-                <li>Donec blandit a lorem id convallis.</li>
-                <li>Cras gravida arcu at diam gravida gravida.</li>
-                <li>Integer in volutpat libero.</li>
-                <li>Donec a diam tellus.</li>
-                <li>Aenean nec tortor orci.</li>
-                <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
-                <li>Vivamus maximus ultricies pulvinar.</li>
-            </ol>
-            <blockquote>Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.</blockquote>
-            <p>Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et <em>justo sodales</em> elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.</p>
-            <p>Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.</p>
-            <dl>
-                <dt>Web</dt>
-                <dd>The part of the Internet that contains websites and web pages</dd>
-                <dt>HTML</dt>
-                <dd>A markup language for creating web pages</dd>
-                <dt>CSS</dt>
-                <dd>A technology to make HTML look better</dd>
-            </dl>
-            <p>Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.</p>
-            <h4>Fourth level</h4>
-            <p>Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.</p>
-            <pre>
-            &lt;!DOCTYPE html&gt;
-            &lt;html&gt;
-            &lt;head&gt;
-                &lt;title&gt;Hello World&lt;/title&gt;
-            &lt;/head&gt;
-            &lt;body&gt;
-                &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.&lt;/p&gt;
-            &lt;/body&gt;
-            &lt;/html&gt;
-            </pre>
-            <p>Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.</p>
-            <table>
-                <thead>
-                <tr>
-                    <th>One</th>
-                    <th>Two</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Three</td>
-                    <td>Four</td>
-                </tr>
-                <tr>
-                    <td>Five</td>
-                    <td>Six</td>
-                </tr>
-                <tr>
-                    <td>Seven</td>
-                    <td>Eight</td>
-                </tr>
-                <tr>
-                    <td>Nine</td>
-                    <td>Ten</td>
-                </tr>
-                <tr>
-                    <td>Eleven</td>
-                    <td>Twelve</td>
-                </tr>
-                </tbody>
-            </table>
-            <p>Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.</p>
-            <h5>Fifth level</h5>
-            <p>Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.</p>
-            <figure>
-                <img src="https://bulma.io/images/placeholders/256x256.png">
-                <img src="https://bulma.io/images/placeholders/256x256.png">
-                <figcaption>
-                Figure 1: Some beautiful placeholders
-                </figcaption>
-            </figure>
-            <h6>Sixth level</h6>
-            <p>Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.</p>
+<!-- HEADER -->
+<section class="hero is-link is-fullheight is-fullheight-with-navbar">
+    <div class="hero-body">
+        <div class="container">Hello! I am
+            <h1 class="title is-1">
+                Dauren Baitursyn
+            </h1>
+            <h2 class="subtitle is-3">
+                Data Science Enthusiast
+            </h2>
+        </div>
+    </div>
+</section>
+<!-- ABOUT -->
+<section class="section" id="about">
+    <!-- TITLE -->
+    <div class="section">
+        <div class="container">
+            <h3 class="title is-2">About Me</h3>
+            <h4 class="subtitle is-5">Jack of all trades, master of "some"</h4>
+            <div class="container">
+                <p>Data Analyst-Scientist with more than <strong>4 years</strong> of well-rounded experience with a
+                    degree in the
+                    field of
+                    <strong>Computer Science</strong>, extensive knowledge of <strong>Data Science</strong> and
+                    <strong>BI</strong> and love for
+                    <strong>programming</strong>.
+                    Looking for an opportunity to work and upgrade, as well as being involved in an organization that
+                    believes in gaining a competitive edge and giving back to the community.
+                </p>
             </div>
         </div>
-</div>
+    </div>
+    <!-- PROFILE -->
+    <div class="section">
+        <div class="container">
+            <div class="tile is-ancestor">
+                <div class="tile is-parent is-vertical">
+                    <div class="tile is-parent">
+                        <div class="tile is-child">
+                            <!-- Profile -->
+                            <div class="content p-4">
+                                <h3 class="title">Profile</h3>
+                                <table class="table is-fullwidth">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Address:</td>
+                                        <td>Almaty, Kazakhstan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone:</td>
+                                        <td>+7 778 100 16 94</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td>biddy.as.diddy@gmail.com</td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <div class="buttons is-centered">
+                                    <a href="https://github.com/biddy1618" class="button is-link">Github</a>
+                                    <a href="https://www.linkedin.com/in/biddyasdiddy/"
+                                        class="button is-link">LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tile is-child">
+                            <!-- Skills -->
+                            <div class="content p-4">
+                                <h3 class="title">Skills</h3>
+                                <div class="content">
+
+                                    <article class="media">
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>
+                                                    <strong>Data Science:</strong>
+                                                    <br>
+                                                    <progress class="progress is-primary" value="70"
+                                                        max="100"></progress>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="media">
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>
+                                                    <strong>Software Engineering:</strong>
+                                                    <br>
+                                                    <progress class="progress is-primary" value="60"
+                                                        max="100"></progress>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="media">
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>
+                                                    <strong>BI:</strong>
+                                                    <br>
+                                                    <progress class="progress is-primary" value="75"
+                                                        max="100"></progress>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="media">
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>
+                                                    <strong>ETL</strong>
+                                                    <br>
+                                                    <progress class="progress is-primary" value="70"
+                                                        max="100"></progress>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile is-child">
+                        <div class="content p-4">
+                            <h4 class="title">Techonolgy tags</h3>
+                                <div class="tags is-centered">
+                                    <span class="tag is-light">Python</span><span class="tag is-light">Flask</span><span
+                                        class="tag is-light">Pandas</span><span class="tag is-light">NumPy</span><span
+                                        class="tag is-light">Power BI</span><span
+                                        class="tag is-light">BeatifulSoup</span><span
+                                        class="tag is-light">Excel</span><span
+                                        class="tag is-light">PostgreSQL</span><span
+                                        class="tag is-light">Bulma</span><span class="tag is-light">SPSS</span><span
+                                        class="tag is-light">PowerPoint</span><span
+                                        class="tag is-light">PyTorch</span><span
+                                        class="tag is-light">DeepPavlov</span><span
+                                        class="tag is-light">Docker</span><span class="tag is-light">PyTest</span><span
+                                        class="tag is-light">MSSQL</span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SERVICES -->
+    <section class="section">
+        <div class="container">
+            <h3 class=" title is-2 has-text-centered">Services</h3>
+            <h4 class="subtitle is-5 has-text-centered">Where our interests might intersect?</h4>
+        </div>
+        <div class="container p-4">
+            <div class="columns">
+                <div class="column">
+                    <div class="box">
+                        <div class="content">
+                            <h4 class="title is-5">Data Visualization and Mining</h4>
+                            Crawling data and storing. Visualization, transformation, and building interactive
+                            dashboards according to the needs of stakeholder.
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="box">
+                        <div class="content">
+                            <h4 class="title is-5">Building predictive statistical and deep neural models</h4>
+                            Building models through carefully crafting and discussing requirements and end-goal of
+                            client, and deployment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <div class="box">
+                        <div class="content">
+                            <h4 class="title is-5">Analytics services</h4>
+                            Data collection, processing and presenting in the form of actionable insights. Translating
+                            numbers to inform strategic business decisions.
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="box">
+                        <div class="content">
+                            <h4 class="title is-5">Data-storytelling</h4>
+                            Correlate analysis outcomes with market state. Presenting actionalbe results to client.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- RESUME -->
+    <section class="section">
+        <div class="container">
+            <div class="content has-text-centered">
+                <h3 class="title is-2">Resume</h3>
+                <h4 class="subtitle is-5">More about my past</h4>
+                <a href="#" class="button is-link is-medium ">
+                    <span class="icon">
+                        <i class="fas fa-file-alt"></i>
+                    </span>
+                    <span>Download My Resume</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="content has-text-centered">
+                <h3 class="title is-2">Contact</h3>
+                <h4 class="subtitle is-5">Get in touch</h4>
+            </div>
+            <br>
+
+            <div class="columns">
+                <div class="column is-6 is-offset-3">
+                    <div class="box">
+                        <form method="post">
+                            <div class="field">
+                                <label for="name" class="label" >Name</label>
+                                <div class="control has-icons-left">
+                                    <input name="name" id="name" class="input" type="text" value="{{ request.form['name'] }}" placeholder="Name input" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="email" class="label">Email</label>
+                                <div class="control has-icons-left">
+                                    <input name="email" id="email" class="input" type="email" value="{{ request.form['email'] }}" placeholder="Email input" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="body" class="label">Message</label>
+                                <div class="control">
+                                    <textarea name="body" id="body" class="textarea" placeholder="What's on your mind">{{ request.form['body'] }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="field is-grouped has-text-centered">
+                                <div class="control">
+                                    <button type="submit" class="button is-link is-large"><span class="icon">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <span>Submit</span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</section>
 {% endblock content %}
