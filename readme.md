@@ -125,3 +125,6 @@ ___
 
 ## 18-07-2021
 * Going through some _Bulma_ templates for better understanding the `css` hierarchy and structuring the elements.
+
+## 20-07-2021
+* Finished _about_ page, set up some addtional `js` code, fixed some basic configuration bugs. Digged a lot into _Bulma_'s examples and templates. Set up the contact view.
