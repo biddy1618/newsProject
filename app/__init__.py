@@ -1,4 +1,3 @@
-from app.views.articles import index
 import os
 from flask import Flask, render_template
 

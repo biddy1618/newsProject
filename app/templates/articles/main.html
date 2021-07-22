@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="section">
+  <div class="container">
+    <form method="post">
+      <div class="field has-addons">
+        <div class="control has-icons-left is-expanded">
+          <input name="search" id="search" class="input is-success" type="text" placeholder="Search">
+          <span class="icon is-small is-left">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <div class="control is-large">
+          <input name="calendar" id="calendar" type="date">
+        </div>
+        <div class="control">
+          <button type="submit" class="button is-info">
+            <span>Search</span>
+          </button>
+        </div>
+        <!-- <p class="help is-success">This username is available</p> -->
+      </div>
+    </form>
+    {% for a in articles %}
+    <a href="#">
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">{{ a['title'] }}</p>
+              {% if a['author'] %}
+              <p class="subtitle is-6 is-family-secondary">{{ a['author'] }}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="content">
+            {{ a['body'] | truncate(300)}}...
+            <br>
+            <time class="has-text-weight-light" datetime="2016-1-1">{{ a['date'] }}</time>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

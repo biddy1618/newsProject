@@ -4,7 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- BULMA.IO -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<!-- EXTENSION BULMA.IO - CALENDAR -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/css/bulma-calendar.min.css">
+	<script defer src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
+	<!-- FONTAWESOME -->
 	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 	<!-- <link rel="stylesheet" href="{{ url_for('static', filename='debug.css') }}"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,20 +33,20 @@
 			</div>
 			<div id="navbarMenu" class="navbar-menu">
 				<div class="navbar-end">
-					<!-- <a class="navbar-item {{ 'is-active' if request.path==url_for('articles.index') }}"
-						href="{{ url_for('articles.index') }}">
+					<!-- <a class="navbar-item {{ 'is-active' if request.path==url_for('articles.main') }}"
+						href="{{ url_for('articles.main') }}">
 						Articles
 					</a> -->
-					
+
 					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link {{ 'is-active' if request.path==url_for('articles.index') }}"
-						href="{{ url_for('articles.index') }}">
-								Articles
-							</a>
+						<a class="navbar-link {{ 'is-active' if request.path==url_for('articles.main') }}"
+							href="{{ url_for('articles.main') }}">
+							Articles
+						</a>
 						<div class="navbar-dropdown">
 							<a class="navbar-item">
-									Search - TFIDF
-								</a>
+								Search - TFIDF
+							</a>
 							<!-- <a class="navbar-item">
 									Profile
 								</a>
@@ -68,7 +73,7 @@
 			<p>
 				<strong>Built with Flask and Bulma with <span class="icon">
 						<i class="fas fa-heart"></i>
-					</span></strong> by <a href="https://mubaidr.js.org">Dauren Baitursyn</a>.
+					</span></strong> by <a href="#">Dauren Baitursyn</a>.
 				The
 				source code is licensed
 				<a href="http://opensource.org/licenses/mit-license.php">MIT</a>.

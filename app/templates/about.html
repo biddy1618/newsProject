@@ -232,9 +232,10 @@
                     <div class="box">
                         <form method="post">
                             <div class="field">
-                                <label for="name" class="label" >Name</label>
+                                <label for="name" class="label">Name</label>
                                 <div class="control has-icons-left">
-                                    <input name="name" id="name" class="input" type="text" value="{{ request.form['name'] }}" placeholder="Name input" required>
+                                    <input name="name" id="name" class="input" type="text"
+                                        value="{{ request.form['name'] }}" placeholder="Name input" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -244,7 +245,8 @@
                             <div class="field">
                                 <label for="email" class="label">Email</label>
                                 <div class="control has-icons-left">
-                                    <input name="email" id="email" class="input" type="email" value="{{ request.form['email'] }}" placeholder="Email input" required>
+                                    <input name="email" id="email" class="input" type="email"
+                                        value="{{ request.form['email'] }}" placeholder="Email input" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
@@ -254,7 +256,8 @@
                             <div class="field">
                                 <label for="body" class="label">Message</label>
                                 <div class="control">
-                                    <textarea name="body" id="body" class="textarea" placeholder="What's on your mind">{{ request.form['body'] }}</textarea>
+                                    <textarea name="body" id="body" class="textarea"
+                                        placeholder="What's on your mind">{{ request.form['body'] }}</textarea>
                                 </div>
                             </div>
 
