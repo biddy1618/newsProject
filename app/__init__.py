@@ -1,5 +1,8 @@
 import os
-from flask import Flask, render_template
+import pickle
+
+from flask import Flask, render_template, url_for
+
 
 from .db import init_db
 
@@ -33,3 +36,15 @@ def create_app(test_config=None):
     app.register_blueprint(articles.bp)
 
     return app
+
+
+def load_models():
+    
+    tfidf_search = {
+        'tfidf_body': pickle.load(open(url_for('static', filename='models/search/tfidf_body.pkl'), 'rb')),
+        'tfidf_body_matrix': pickle.load(open(url_for('static', filename='models/search/tfidf_body_matrix.pkl'), 'rb')),
+        'tfidf_title': pickle.load(open(url_for('static', filename='models/search/tfidf_title.pkl'), 'rb')),
+        'tfidf_title_matrix': pickle.load(open(url_for('static', filename='models/search/tfidf_title_matrix.pkl'), 'rb')),
+    }
+
+    return tfidf_search

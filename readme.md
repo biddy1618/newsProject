@@ -66,6 +66,11 @@ ___
 * Very interesting - basically, ORM operations should separate session and orm operations (doing ORM operations and then act upon session), but this way it is hard to catch any exception due, one way to handle this is to create a function separate for session operations, maybe later.
 * TypeHinting and return type in case of error - what should I return with type hinting in case of exception with no case of raising exception?
 * `logging` modular - [link](https://stackoverflow.com/questions/15727420/using-logging-in-multiple-modules), general tutorial on logging - [link](https://docs.python.org/3/howto/logging.html#advanced-logging-tutorial)
+* How to set up a production using application factory pattern and celery - [medium](https://towardsdatascience.com/how-to-set-up-a-production-grade-flask-application-using-application-factory-pattern-and-celery-90281349fb7a)
+* Setting up global variables 
+* * [link](https://www.reddit.com/r/learnpython/comments/85tj08/flask_global_variable/)
+* * [link](https://stackoverflow.com/questions/35309042/python-how-to-set-global-variables-in-flask)
+* * [link](https://stackoverflow.com/questions/32815451/are-global-variables-thread-safe-in-flask-how-do-i-share-data-between-requests)
 
 
 # Logs

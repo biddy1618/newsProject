@@ -7,10 +7,7 @@
 	<!-- BULMA.IO -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 	<!-- EXTENSION BULMA.IO - CALENDAR -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/css/bulma-calendar.min.css">
-	<script defer src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
-	<!-- FONTAWESOME -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.0.0/bulma-calendar/dist/css/bulma-calendar.min.css">
 	<!-- <link rel="stylesheet" href="{{ url_for('static', filename='debug.css') }}"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Pet Project</title>
@@ -99,5 +96,11 @@
 	</div>
 	{% endif %}
 	{% endwith %}
-	<script async type="text/javascript" src="{{ url_for('static', filename='bulma.js')}}"></script>
+	<!-- BULMA CALENDAR -->
+	<script defer src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.0.0/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
+	<!-- FONTAWESOME -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<!-- CUSTOM SCRIPT -->
+	<script defer type="text/javascript" src="{{ url_for('static', filename='bulma.js')}}"></script>
+	
 </body>

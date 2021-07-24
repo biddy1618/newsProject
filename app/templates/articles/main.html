@@ -3,25 +3,28 @@
 {% block content %}
 <div class="section">
   <div class="container">
-    <form method="post">
-      <div class="field has-addons">
-        <div class="control has-icons-left is-expanded">
-          <input name="search" id="search" class="input is-success" type="text" placeholder="Search">
-          <span class="icon is-small is-left">
-            <i class="fas fa-search"></i>
-          </span>
+    <div class="block">
+      <h1 class="title is-2">Search using TF-IDF</h1>
+      <form method="post">
+        <div class="field has-addons">
+          <div class="control has-icons-left is-expanded">
+            <input name="query" id="query" class="input is-success" type="text" placeholder="Search">
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+          <div id="calendar-div" class="control">
+            <input name="calendar" id="calendar" type="date">
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-info">
+              <span>Search</span>
+            </button>
+          </div>
+          <!-- <p class="help is-success">This username is available</p> -->
         </div>
-        <div class="control is-large">
-          <input name="calendar" id="calendar" type="date">
-        </div>
-        <div class="control">
-          <button type="submit" class="button is-info">
-            <span>Search</span>
-          </button>
-        </div>
-        <!-- <p class="help is-success">This username is available</p> -->
-      </div>
-    </form>
+      </form>
+    </div>
     {% for a in articles %}
     <a href="#">
       <div class="card">
