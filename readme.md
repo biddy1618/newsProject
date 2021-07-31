@@ -49,6 +49,76 @@ More on Part 2:
 `jupyter lab --ContentsManager.allow_hidden=True`
 ___
 
+# Project setup
+The project directory will contain:
+* `flaskr/`, a Python package containing your application code and files.
+* `tests/`, a directory containing test modules.
+* `venv/`, a Python virtual environment where Flask and other dependencies are installed.
+* Installation files telling Python how to install your project.
+* Version control config, such as git. You should make a habit of using some type of version control for all your projects, no matter the size.
+* Any other project files you might add in the future.
+
+Project layout:
+```
+/home/user/Projects/flask-tutorial
+├── flaskr/
+│   ├── __init__.py
+│   ├── db.py
+│   ├── schema.sql
+│   ├── auth.py
+│   ├── blog.py
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── auth/
+│   │   │   ├── login.html
+│   │   │   └── register.html
+│   │   └── blog/
+│   │       ├── create.html
+│   │       ├── index.html
+│   │       └── update.html
+│   └── static/
+│       └── style.css
+├── tests/
+│   ├── conftest.py
+│   ├── data.sql
+│   ├── test_factory.py
+│   ├── test_db.py
+│   ├── test_auth.py
+│   └── test_blog.py
+├── venv/
+├── setup.py
+└── MANIFEST.in
+```
+
+## Setup
+The most straightforward way to create a Flask application is to create a global Flask instance directly at the top of your code, like how the “Hello, World!” example did on the previous page. While this is simple and useful in some cases, it can cause some tricky issues as the project grows.
+
+Instead of creating a Flask instance globally, you will create it inside a function. This function is known as the application factory. Any configuration, registration, and other setup the application needs will happen inside the function, then the application will be returned.
+
+The `__init__.py` serves double duty: it will contain the application factory, and it tells Python that the flaskr directory should be treated as a package.
+
+`instance_relative_config=True` tells the app that configuration files are relative to the instance folder. The instance folder is located outside the  `flaskr` package and can hold local data that shouldn’t be committed to version control, such as configuration secrets and the database file.
+
+Templates are files that contain static data as well as placeholders for dynamic data. A template is rendered with specific data to produce a final document. Flask uses the Jinja template library to render templates.
+
+Global variables that are available within Jinja2 templates by default - [Standard Context](https://flask.palletsprojects.com/en/2.0.x/templating/#standard-context)
+
+`session` vs `g` - [link](https://stackoverflow.com/questions/32909851/flask-session-vs-g/32910056) - `g` is specific to request, i.e. exists along full request cycle, and once the request is torn down, g is torn down as well, while session is browser specific, i.e. it persists across different requests for the same user. Use cases for `g`: 
+* Set it up for `before_request` hook to add information for the this specific request.
+* Get connection to database which is in the scope of request.
+* `app.teardown_appcontext(function_to_call_when_returning_response)` - clear the database session when returning the response.
+
+More on making project installable - [link to tutorial](https://flask.palletsprojects.com/en/2.0.x/tutorial/install/)
+
+More on flask context [here](https://testdriven.io/blog/flask-contexts/). So, basically, flask makes it look like some variables (like `request` variable in views) are accessible globally, but in reality flask uses contexts to make a number of objects "act" like globals only for the particular context (a thread, process, or coroutine) being used. In flask, this is called a [context-local](https://werkzeug.palletsprojects.com/en/1.0.x/local/). When a request is received, Flask provides two contexts:
+* Application - keeps track of the application-level data - `current_app`, `g`
+* Request - keeps track of the request-level data (URL, HTTP method, headers, request data, session info) - `request`, `session`.
+
+__One thing to note is that application context is provided in a view function, or CLI command.__ Otherwise, one should use `app_context()` in a `with` block to have access to `current_app`.
+From official documentation:
+>The application context is created and destroyed as necessary. When a Flask application begins handling a request, it pushes an application context and a request context. When the request ends it pops the request context then the application context. Typically, an application context will have the same lifetime as a request. We also can register function in `app.teardown_appcontext` to be called when the application context ends (context is available by default in this function, so no need to wrap the function being registered within decorater `@with_appcontext`.)
+
+
 # Notes:
 
 * Python OOP best practices 2020 - [link](https://towardsdatascience.com/5-best-practices-for-professional-object-oriented-programming-in-python-20613e08baee)
