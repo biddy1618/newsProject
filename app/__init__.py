@@ -3,6 +3,7 @@ import pickle
 
 from flask import Flask, render_template, url_for
 
+from pymystem3 import Mystem
 
 from .db import init_db
 
@@ -22,6 +23,8 @@ def create_app(test_config=None):
     else:
         app.config.from_pyfile('production.py')
     
+
+    load_search(app)
     init_db(app)
     
     # test
@@ -38,13 +41,16 @@ def create_app(test_config=None):
     return app
 
 
-def load_models():
+def load_search(app):
+
+    app._mystem = Mystem()
     
     tfidf_search = {
-        'tfidf_body': pickle.load(open(url_for('static', filename='models/search/tfidf_body.pkl'), 'rb')),
-        'tfidf_body_matrix': pickle.load(open(url_for('static', filename='models/search/tfidf_body_matrix.pkl'), 'rb')),
-        'tfidf_title': pickle.load(open(url_for('static', filename='models/search/tfidf_title.pkl'), 'rb')),
-        'tfidf_title_matrix': pickle.load(open(url_for('static', filename='models/search/tfidf_title_matrix.pkl'), 'rb')),
+        'tfidf_index': pickle.load(open(app.config['DATA_PATH'] + '/search/tfidf_index.pkl', 'rb')),
+        'tfidf_body': pickle.load(open(app.config['DATA_PATH'] + '/search/tfidf_body.pkl', 'rb')),
+        'tfidf_body_matrix': pickle.load(open(app.config['DATA_PATH'] + 'search/tfidf_body_matrix.pkl', 'rb')),
+        'tfidf_title': pickle.load(open(app.config['DATA_PATH'] + 'search/tfidf_title.pkl', 'rb')),
+        'tfidf_title_matrix': pickle.load(open(app.config['DATA_PATH'] + 'search/tfidf_title_matrix.pkl', 'rb')),
     }
 
-    return tfidf_search
+    app.tfidf_search = tfidf_search

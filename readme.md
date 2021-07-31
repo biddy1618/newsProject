@@ -133,3 +133,7 @@ ___
 
 ## 20-07-2021
 * Finished _about_ page, set up some addtional `js` code, fixed some basic configuration bugs. Digged a lot into _Bulma_'s examples and templates. Set up the contact view.
+
+## 24-07-2021
+* Setting up the search page
+* Next I need to load pickle file one time, and access them in a thread-safe way (process-safe)

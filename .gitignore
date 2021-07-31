@@ -133,3 +133,6 @@ dmypy.json
 
 # Instance folder
 instance/
+
+# Models folder
+app/models/

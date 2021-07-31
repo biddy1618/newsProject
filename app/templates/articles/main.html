@@ -21,7 +21,6 @@
               <span>Search</span>
             </button>
           </div>
-          <!-- <p class="help is-success">This username is available</p> -->
         </div>
       </form>
     </div>
@@ -31,17 +30,29 @@
         <div class="card-content">
           <div class="media">
             <div class="media-content">
-              <p class="title is-4">{{ a['title'] }}</p>
-              {% if a['author'] %}
-              <p class="subtitle is-6 is-family-secondary">{{ a['author'] }}</p>
+              <p class="title is-4">{{ a[0]['title'] }}</p>
+              {% if a[0]['author'] %}
+              <p class="subtitle is-6 is-family-secondary">{{ a[0]['author'] }}</p>
               {% endif %}
             </div>
           </div>
           <div class="content">
-            {{ a['body'] | truncate(300)}}...
+            {{ a[0]['body'] | truncate(300)}}...
             <br>
-            <time class="has-text-weight-light" datetime="2016-1-1">{{ a['date'] }}</time>
+            <time class="has-text-weight-light" datetime="2016-1-1">{{ a[0]['date'] }}</time>
           </div>
+          {% if a[1] %}
+          <footer class="card-footer">
+            <p class="card-footer-item">
+              <span>
+                Similarity rank
+              </span>
+            </p>
+            <p class="card-footer-item">
+                <progress class="progress is-primary" value="{{ a[1] }}" max="1"></progress>
+            </p>
+          </footer>
+          {% endif %}
         </div>
       </div>
     </a>
