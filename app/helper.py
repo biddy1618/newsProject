@@ -1,9 +1,7 @@
 import datetime
-import logging
+import dateparser
 
 from typing import List
-
-logger = logging.getLogger(__name__)
 
 class Helper():
     
@@ -20,36 +18,30 @@ class Helper():
             str: message formatted.
         """
         if e: return f'{msg}. {type(e).__name__}: "{e}".'
-        else: return f'{msg}'    
+        else: return f'{msg}'
     
     @staticmethod
-    def generate_dates(start_date: str, end_date: str = None) -> List[str]:        
+    def parse_date(dates: str) -> List[datetime.datetime]:        
         """
-        Generates date(s) for fetching url links for specific dates.
+        Parse date(s) from the calendar.
 
         Args:
-            startDate (str): Start date in format "dd.mm.yyyy".
-            endDate (str, optional): End date in format "dd.mm.yyyy", should be later than start date. 
-            Defaults to None.
+            dates (str): Dates in format "dd-mm-yyyy". There can be single date, or two date with delimiter ' - '.
 
         Returns:
-            List[str]: List of dates for the given date range (days) or None in case of error.
+            List[datetime.datetime]: Tuple of start date and end date (if available).
         """
-        format = '%d.%m.%Y'
+        format = '%d-%m-%Y'
         try:
+            ds = dates.split(' - ')
+            start_date = ds[0]
+            end_date = ds[1] if len(ds) > 1 else None
             start_date = datetime.datetime.strptime(start_date, format)
-            end_date = datetime.datetime.strptime(end_date, format) if end_date is not None else start_date + datetime.timedelta(days=1)
+            end_date = datetime.datetime.strptime(end_date, format) if end_date is not None else start_date + datetime.timedelta(days = 1)
+            if start_date == end_date: end_date = end_date + datetime.timedelta(days = 1)
         except ValueError as e:
-            logger.error(Helper._message('Invalid date format: {start_date}, {end_date}. Input the date in following format: "dd.mm.yyyy"', e))
-            # raise SystemExit(e)
+            print(e)
             return None
         
-        if start_date >= end_date:
-            logger.error(Helper._message('Make sure that the end date is after the start date'))
-            # raise SystemExit()
-            return None
-        
-        date_generated = [(start_date + datetime.timedelta(days=x)).strftime(format) for x in range(0, (end_date-start_date).days)]
-
-        return date_generated
+        return (start_date, end_date)
 

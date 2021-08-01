@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, redirect, render_template, request, url_for
 )
 
 from app.db import get_session, models
@@ -13,7 +13,7 @@ def about():
         email = request.form['email']
         body = request.form['body']
         flash('Successfully submitted')
-        flash(f'I will contact you, {name} by the following e-mail: {email}.')
+        flash(f'I will contact you, {name}, by the following e-mail: {email}.')
         
         return redirect(url_for('base.about', _anchor='contact'))
         

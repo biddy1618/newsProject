@@ -21,7 +21,7 @@
 
   // Bulma calendar
   //// Initialize
-  var calendar = new bulmaCalendar('#calendar', { showFooter: false, isRange: false, dateFormat: "DD-MM-YYYY" });
+  var calendar = new bulmaCalendar('#calendar', { showFooter: false, isRange: true, dateFormat: "DD-MM-YYYY" });
   
   //// Prevent default submit for calendar
   var calendarButtons = document.getElementById('calendar-div').getElementsByTagName('button');
