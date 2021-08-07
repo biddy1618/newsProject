@@ -5,6 +5,9 @@ from flask import (
 from sqlalchemy.sql.expression import func, and_
 
 import re
+from transliterate import translit
+from autocorrect import Speller
+
 from sklearn.metrics.pairwise import linear_kernel
 from numpy import in1d
 
@@ -15,12 +18,11 @@ from app.helper import Helper
 
 bp = Blueprint('articles', __name__, url_prefix='/articles')
 
-@bp.route('/', methods = ('GET', 'POST'))
+@bp.route('/', methods = ('GET',))
 def main():
-    if request.method == 'POST':
-        query = request.form['query']
-        dates = request.form['calendar']
-        
+    query = request.args.get('query')
+    dates = request.args.get('calendar')
+    if query or dates:
         s = get_session()
         a_date_filtered = None
             
@@ -30,32 +32,42 @@ def main():
                 a_date_filtered = s.query(models.Article.id).filter(
                         and_(models.Article.date >= dates_processed[0],\
                             models.Article.date <= dates_processed[1])).all()
+        
+        query_check = _preprocess(query)
+        query_lemmatized = _lemmatize(query)
+
+        if query_check == query:
+            query_check = None
             
-        ids, ranks = _get_top_n(query, a = a_date_filtered)
+        ids, ranks = _get_top_n(query_lemmatized, a = a_date_filtered)
         ids = [int(i) for i in ids]
         ranks = [float(i) for i in ranks]
         
         s = get_session()
         a = [(s.query(models.Article).get(id), ranks[i]) for i, id in enumerate(ids)]
+        return render_template('articles/main.html', articles=a, query=query, query_check=query_check)
+
+    else:
+        s = get_session()
+        a = s.query(models.Article).order_by(func.random())[:10]
+        a = [(i, None) for i in a]
         return render_template('articles/main.html', articles=a)
 
-    s = get_session()
-    a = s.query(models.Article).order_by(func.random())[:10]
-    a = [(i, None) for i in a]
-    return render_template('articles/main.html', articles=a)
-
 def _preprocess(query):
-    query = query.lower()
-    query = re.sub('[\W_\d]+', ' ', query)
-    query = current_app._mystem.lemmatize(query)
-    query = ''.join(query)
+    query = translit(query, 'ru')
+    query = current_app._speller(query)
     return query
 
-def _get_top_n(query, n = 10, a = None):
-    q_transformed = _preprocess(query)
+def _lemmatize(query):
+    query = query.lower()
+    query_processed = re.sub('[\W_\d]+', ' ', query)
+    query_processed = current_app._mystem.lemmatize(query_processed)
+    query_processed = ''.join(query_processed)
+    return query_processed
 
-    q_transformed_body = current_app.tfidf_search['tfidf_body'].transform([q_transformed])
-    q_transformed_title = current_app.tfidf_search['tfidf_title'].transform([q_transformed])
+def _get_top_n(query, n = 10, a = None):
+    q_transformed_body = current_app.tfidf_search['tfidf_body'].transform([query])
+    q_transformed_title = current_app.tfidf_search['tfidf_title'].transform([query])
 
     dist_body = linear_kernel(q_transformed_body, current_app.tfidf_search['tfidf_body_matrix']).flatten()
     dist_title = linear_kernel(q_transformed_title, current_app.tfidf_search['tfidf_title_matrix']).flatten()

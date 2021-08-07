@@ -2,12 +2,15 @@ import os
 import pickle
 
 from flask import Flask, render_template, url_for
+from logging.config import dictConfig
 
 from pymystem3 import Mystem
+from autocorrect import Speller
 
 from .db import init_db
 
 def create_app(test_config=None):
+
     app = Flask(__name__, instance_relative_config=True)
     
     # ensure the instance folder exists
@@ -23,7 +26,6 @@ def create_app(test_config=None):
     else:
         app.config.from_pyfile('production.py')
     
-
     load_search(app)
     init_db(app)
     
@@ -44,6 +46,7 @@ def create_app(test_config=None):
 def load_search(app):
 
     app._mystem = Mystem()
+    app._speller = Speller(lang='ru')
     
     tfidf_search = {
         'tfidf_index': pickle.load(open(app.config['DATA_PATH'] + '/search/tfidf_index.pkl', 'rb')),

@@ -1,5 +1,5 @@
 import datetime
-import dateparser
+from flask import current_app
 
 from typing import List
 
@@ -40,7 +40,7 @@ class Helper():
             end_date = datetime.datetime.strptime(end_date, format) if end_date is not None else start_date + datetime.timedelta(days = 1)
             if start_date == end_date: end_date = end_date + datetime.timedelta(days = 1)
         except ValueError as e:
-            print(e)
+            current_app.logger.info(e)
             return None
         
         return (start_date, end_date)

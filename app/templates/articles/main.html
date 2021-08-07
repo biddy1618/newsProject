@@ -5,10 +5,11 @@
   <div class="container">
     <div class="block">
       <h1 class="title is-2">Search using TF-IDF</h1>
-      <form method="post">
+      <form method="get" action={{ url_for('articles.main') }}>
         <div class="field has-addons">
           <div class="control has-icons-left is-expanded">
-            <input name="query" id="query" class="input is-success" type="text" placeholder="Search">
+            <input name="query" id="query" class="input is-success" type="text" value="{{ query }}"
+              placeholder="Search">
             <span class="icon is-small is-left">
               <i class="fas fa-search"></i>
             </span>
@@ -23,40 +24,44 @@
           </div>
         </div>
       </form>
+      {% if query_check %}
+      <a class="help is-info is-light"
+        href="{{ url_for('articles.main', query=query_check, calendar=request.args.get('calendar')) }}">Did you mean "{{
+        query_check }}"?</a>
+      {% endif %}
     </div>
     {% for a in articles %}
-    <a href="#">
-      <div class="card">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content">
-              <p class="title is-4">{{ a[0]['title'] }}</p>
-              {% if a[0]['author'] %}
-              <p class="subtitle is-6 is-family-secondary">{{ a[0]['author'] }}</p>
-              {% endif %}
-            </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-4">{{ a[0]['title'] }}</p>
+            {% if a[0]['author'] %}
+            <p class="subtitle is-6 is-family-secondary">{{ a[0]['author'] }}</p>
+            {% endif %}
           </div>
-          <div class="content">
-            {{ a[0]['body'] | truncate(300)}}...
-            <br>
-            <time class="has-text-weight-light" datetime="2016-1-1">{{ a[0]['date'] }}</time>
-          </div>
-          {% if a[1] %}
-          <footer class="card-footer">
-            <p class="card-footer-item">
-              <span>
-                Similarity rank
-              </span>
-            </p>
-            <p class="card-footer-item">
-                <progress class="progress is-primary" value="{{ a[1] }}" max="1"></progress>
-            </p>
-          </footer>
-          {% endif %}
         </div>
+        <div class="content">
+          {{ a[0]['body'] | truncate(300)}}...
+          <br>
+          <time class="has-text-weight-light">{{ a[0]['date'] }}</time>
+        </div>
+        {% if a[1] %}
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <span>
+              Similarity rank
+            </span>
+          </p>
+          <p class="card-footer-item">
+            <progress class="progress is-primary" value="{{ a[1] }}" max="1"></progress>
+          </p>
+        </footer>
+        {% endif %}
       </div>
-    </a>
+    </div>
     {% endfor %}
   </div>
+</div>
 </div>
 {% endblock content %}

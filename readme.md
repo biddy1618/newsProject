@@ -207,3 +207,12 @@ From official documentation:
 ## 24-07-2021
 * Setting up the search page
 * Next I need to load pickle file one time, and access them in a thread-safe way (process-safe)
+
+## 07-08-2021
+* Finished search with TFIDF
+* Finished download CV button
+* Need to dockerize the project
+* Need to improve the search input
+* * Automatic error correction
+* * Encode latin into russian and vice versa
+* * 
