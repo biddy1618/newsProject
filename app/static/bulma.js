@@ -21,11 +21,15 @@
 
   // Bulma calendar
   //// Initialize
-  var calendar = new bulmaCalendar('#calendar', { showFooter: false, isRange: true, dateFormat: "DD-MM-YYYY" });
-  
-  //// Prevent default submit for calendar
-  var calendarButtons = document.getElementById('calendar-div').getElementsByTagName('button');
-  for (i = 0; i < calendarButtons.length; i++) {
-    calendarButtons[i].setAttribute("type", "button");
+  try {
+    var calendar = new bulmaCalendar('#calendar', { showFooter: false, isRange: true, dateFormat: "DD-MM-YYYY" });
+    
+    //// Prevent default submit for calendar
+    var calendarButtons = document.getElementById('calendar-div').getElementsByTagName('button');
+    for (i = 0; i < calendarButtons.length; i++) {
+      calendarButtons[i].setAttribute("type", "button");
+    }
+  } catch(error) {
+    console.log('No calendar was found.');
   }
 })();

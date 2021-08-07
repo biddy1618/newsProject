@@ -65,6 +65,7 @@ def _get_top_n(query, n = 10, a = None):
 
     dist_weighted = b_weight * dist_body + t_weight * dist_title
     indexes = current_app.tfidf_search['tfidf_index']
+    
     if a is not None:
         a = [i[0] for i in a]
         m = in1d(indexes, a)

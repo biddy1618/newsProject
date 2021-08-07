@@ -136,3 +136,6 @@ instance/
 
 # Models folder
 app/models/
+
+# CV file
+CV.pdf
