@@ -45,7 +45,7 @@ def create_app(test_config=None):
 
 def load_search(app):
 
-    app._mystem = Mystem()
+    app._mystem = Mystem(mystem_bin=app.config['DATA_PATH'] + '/mystem/mystem')
     app._speller = Speller(lang='ru')
     
     tfidf_search = {

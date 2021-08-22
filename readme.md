@@ -142,6 +142,104 @@ From official documentation:
 * * [link](https://stackoverflow.com/questions/35309042/python-how-to-set-global-variables-in-flask)
 * * [link](https://stackoverflow.com/questions/32815451/are-global-variables-thread-safe-in-flask-how-do-i-share-data-between-requests)
 
+# History of pip packages
+```
+pip install Flask
+Collecting Flask
+  Using cached Flask-2.0.1-py3-none-any.whl (94 kB)
+Collecting itsdangerous>=2.0
+  Using cached itsdangerous-2.0.1-py3-none-any.whl (18 kB)
+Collecting click>=7.1.2
+  Using cached click-8.0.1-py3-none-any.whl (97 kB)
+Collecting Jinja2>=3.0
+  Using cached Jinja2-3.0.1-py3-none-any.whl (133 kB)
+Collecting Werkzeug>=2.0
+  Using cached Werkzeug-2.0.1-py3-none-any.whl (288 kB)
+Collecting MarkupSafe>=2.0
+  Using cached MarkupSafe-2.0.1-cp38-cp38-manylinux2010_x86_64.whl (30 kB)
+
+pip install pymystem3
+Collecting pymystem3
+  Using cached pymystem3-0.2.0-py3-none-any.whl (10 kB)
+Collecting requests
+  Using cached requests-2.26.0-py2.py3-none-any.whl (62 kB)
+Collecting certifi>=2017.4.17
+  Using cached certifi-2021.5.30-py2.py3-none-any.whl (145 kB)
+Collecting idna<4,>=2.5; python_version >= "3"
+  Using cached idna-3.2-py3-none-any.whl (59 kB)
+Collecting urllib3<1.27,>=1.21.1
+  Using cached urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+Collecting charset-normalizer~=2.0.0; python_version >= "3"
+  Using cached charset_normalizer-2.0.4-py3-none-any.whl (36 kB)
+
+pip install autocorrect
+Processing /home/biddy/.cache/pip/wheels/da/03/6e/62a48359ab630e39939dbb392cc079923bb77664e97a47645d/autocorrect-2.5.0-py3-none-any.whl
+
+pip install SQLAlchemy
+Collecting SQLAlchemy
+  Downloading SQLAlchemy-1.4.23-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.5 MB)
+Collecting greenlet!=0.4.17; python_version >= "3" and platform_machine in "x86_64 X86_64 aarch64 AARCH64 ppc64le PPC64LE amd64 AMD64 win32 WIN32"
+  Downloading greenlet-1.1.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (150 kB)
+
+pip install dateparser
+Collecting dateparser
+  Using cached dateparser-1.0.0-py2.py3-none-any.whl (279 kB)
+Collecting regex!=2019.02.19
+  Downloading regex-2021.8.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (738 kB)
+Collecting pytz
+  Using cached pytz-2021.1-py2.py3-none-any.whl (510 kB)
+Collecting tzlocal
+  Downloading tzlocal-3.0-py3-none-any.whl (16 kB)
+Collecting python-dateutil
+  Downloading python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+Collecting backports.zoneinfo; python_version < "3.9"
+  Downloading backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl (74 kB)
+Collecting six>=1.5
+  Using cached six-1.16.0-py2.py3-none-any.whl (11 kB)
+
+pip install numpy
+Collecting numpy
+  Downloading numpy-1.21.2-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (15.8 MB)
+
+pip install scikit-learn
+Collecting scikit-learn
+  Using cached scikit_learn-0.24.2-cp38-cp38-manylinux2010_x86_64.whl (24.9 MB)
+Collecting threadpoolctl>=2.0.0
+  Using cached threadpoolctl-2.2.0-py3-none-any.whl (12 kB)
+Collecting scipy>=0.19.1
+  Downloading scipy-1.7.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (28.4 MB)
+Requirement already satisfied: numpy>=1.13.3 in ./venv/lib/python3.8/site-packages (from scikit-learn) (1.21.2)
+Collecting joblib>=0.11
+  Using cached joblib-1.0.1-py3-none-any.whl (303 kB)
+
+pip install psycopg2-binary
+Collecting psycopg2-binary
+  Downloading psycopg2_binary-2.9.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
+
+pip install transliterate
+Collecting transliterate
+  Using cached transliterate-1.10.2-py2.py3-none-any.whl (45 kB)
+```
+
+# Docker
+
+In order to create network, use following script: `docker network create --driver bridge --publish 5000:5000 flaskapp-net`.
+
+To inspect the network, run `docker inspect flaskapp-net`.
+
+First, run the postgres container on this network:
+```
+docker run --network flaskapp-net --name postgres --restart unless-stopped -d postgres
+docker exec  postgres sh -c "psql -U postgres < setup.sql"
+docker exec postgres sh -c "psql -U biddy projectnews < dump.bak"
+```
+
+Then run the flask application with DB url host as postgres in the config file:
+```
+docker run --name flaskapp --network flaskapp-net --restart unless-stopped -v $PWD/:/app/ -p 5000:5000 flaskapp
+```
+
+
 
 # Logs
 
@@ -215,4 +313,4 @@ From official documentation:
 * Need to improve the search input
 * * Automatic error correction
 * * Encode latin into russian and vice versa
-* * 
+* Added transliteration to russian and spell checking, but it could be definitely improved

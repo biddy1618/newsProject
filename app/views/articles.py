@@ -35,7 +35,7 @@ def main():
         
         query_check = _preprocess(query)
         query_lemmatized = _lemmatize(query)
-
+        
         if query_check == query:
             query_check = None
             
