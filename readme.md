@@ -238,6 +238,8 @@ Then run the flask application with DB url host as postgres in the config file:
 ```
 docker run --name flaskapp --network flaskapp-net --restart unless-stopped -v $PWD/:/app/ -p 5000:5000 flaskapp
 ```
+## Notes
+* Just one simple line where I needed to set up the host to be `0.0.0.0` fixed to accessility issue, omg. The power of googling is undermined. One can solve the bugs simply by well-written google request - [link](https://stackoverflow.com/questions/54940990/docker-cant-connect-to-container-exposed-port)
 
 
 
@@ -314,3 +316,8 @@ docker run --name flaskapp --network flaskapp-net --restart unless-stopped -v $P
 * * Automatic error correction
 * * Encode latin into russian and vice versa
 * Added transliteration to russian and spell checking, but it could be definitely improved
+
+## 22-08-2021
+* Set up docker containers to be used in develpment
+* TODO:
+* * Write scripts for docker launches - optimization
